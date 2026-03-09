@@ -1,4 +1,8 @@
 #include <iostream>
+#include "userInterface.h"
+#include "lesson.h"
+#include "test.h"
+#include "statistics.h"
 
 using namespace std;
 

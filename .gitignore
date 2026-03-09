@@ -1,0 +1,63 @@
+# ---- Build output folders ----
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+ipch/
+x64/
+x86/
+Debug/
+Release/
+dist/
+out/
+
+# ---- Visual Studio user-specific files ----
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+
+# ---- Intermediate/temporary files ----
+*.obj
+*.pch
+*.pdb
+*.idb
+*.ilk
+*.log
+*.tlog
+*.lastbuildstate
+*.cache
+*.db
+*.opendb
+*.tmp
+*.temp
+*.sdf
+*.psess
+*.vsp
+*.vspscc
+
+# ---- VS auto-generated folders ----
+.vs/
+
+# ---- C++ binary outputs ----
+*.exe
+*.dll
+*.lib
+*.exp
+
+# ---- NuGet ----
+packages/
+*.nupkg
+project.lock.json
+
+# ---- CMake (optional) ----
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# ---- Other ----
+*.ipdb
+*.iobj
+*.res
+*.manifest

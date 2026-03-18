@@ -1,0 +1,68 @@
+# Visual Studio / Visual C++ generated files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+Debug/
+Release/
+x64/
+build/
+out/
+
+# Compiled object files, libraries, executables, debug files
+*.obj
+*.o
+*.lib
+*.a
+*.so
+*.dll
+*.exe
+*.ilk
+*.pdb
+*.ipdb
+*.idb
+
+# Visual Studio DB / caches
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+*.opendb
+
+# MSBuild / Visual C++ intermediate files
+*.lastbuildstate
+*.tlog/
+*.log
+*.vsmdi
+
+# Project / user specific
+*.vcxproj.user
+*.vcxproj.filters.user
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# NuGet / packages
+packages/
+*.nupkg
+
+# Test results
+TestResults/
+
+# IDE config
+.vscode/
+.idea/
+_ReSharper*/
+*_ReSharper*/
+
+# OS files
+Thumbs.db
+Desktop.ini

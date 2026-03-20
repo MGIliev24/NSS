@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// Resets all account slots to an empty, unused state.
+// Must be called once at startup before any authentication logic runs.
 void initializeAccounts(UserAccount accounts[], int size)
 {
     for (int i = 0; i < size; i++)
@@ -15,6 +17,8 @@ void initializeAccounts(UserAccount accounts[], int size)
     }
 }
 
+// Safely reads an integer menu choice within the [minValue, maxValue] range.
+// Rejects non-numeric and out-of-range input, prompting the user to retry.
 static int readAuthChoice(int minValue, int maxValue)
 {
     int choice;
@@ -35,6 +39,8 @@ static int readAuthChoice(int minValue, int maxValue)
     }
 }
 
+// Searches the account registry for a matching username among active (used) slots.
+// Returns the index of the account if found, or -1 if no match exists.
 static int findAccountIndex(UserAccount accounts[], int size, const string& username)
 {
     for (int i = 0; i < size; i++)
@@ -47,6 +53,8 @@ static int findAccountIndex(UserAccount accounts[], int size, const string& user
     return -1;
 }
 
+// Registers a new user account if the chosen username is available and a free slot exists.
+// On success, logs the new user in by populating loggedInUser and returns true.
 static bool signUp(UserAccount accounts[], int size, string& loggedInUser)
 {
     string username;
@@ -89,6 +97,10 @@ static bool signUp(UserAccount accounts[], int size, string& loggedInUser)
     return true;
 }
 
+
+// Attempts to log in with the provided credentials.
+// Verifies that the username exists and the password matches, then populates loggedInUser.
+// Returns true on successful login, false on any credential mismatch.
 static bool logIn(UserAccount accounts[], int size, string& loggedInUser)
 {
     string username;
@@ -117,6 +129,9 @@ static bool logIn(UserAccount accounts[], int size, string& loggedInUser)
     return true;
 }
 
+// Drives the authentication loop, showing the login panel until the user
+// successfully signs up, logs in, or explicitly chooses to exit (option 0).
+// Returns true if a session was established, false if the user chose to exit.
 bool handleAuthentication(UserAccount accounts[], int size, string& loggedInUser)
 {
     bool loggedIn = false;
@@ -145,6 +160,6 @@ bool handleAuthentication(UserAccount accounts[], int size, string& loggedInUser
             return false;
         }
     }
-    return true;
+    return true; // A valid session was established
 }
 

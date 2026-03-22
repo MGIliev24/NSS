@@ -2,37 +2,40 @@
 #include <string>
 #include "gui.h"
 #include "colors.h"
+
 using namespace std;
 
-int showMainMenu()
+// Displays the main menu screen with all primary navigation options
+void showMainMenu()
 {
     clearScreen();
     printAsciiTitle();
-    printCenteredTitle("MAIN MENU");
-    cout << "\n";
-    string options[] = { "Lessons", "Take IT Test", "View Statistics", "Exit" };
-    int idx = arrowMenu(options, 4);
-    cout << "\n";
-    return idx;
+    // List all available menu options
+    cout << " 1. Lessons\n";
+    cout << " 2. Take IT Test\n";
+    cout << " 3. View Statistics\n";
+    cout << " 0. Exit\n";
+    printThinLine();
+    cout << "Choose option: ";
 }
-
-int showLessonsMenu()
+// Displays the lessons submenu, listing all available lesson modules
+void showLessonsMenu()
 {
     clearScreen();
-    printAsciiTitle();
     printCenteredTitle("LESSON MODULES");
-    cout << "\n";
-    string options[] = { "HTML Basics", "CSS Basics", "JavaScript Basics", "Back to Main Menu" };
-    int idx = arrowMenu(options, 4);
-    cout << "\n";
-    return idx;
+    // List all available lesson topics
+    cout << " 1. HTML Basics\n";
+    cout << " 2. CSS Basics\n";
+    cout << " 3. JavaScript Basics\n";
+    cout << " 0. Back to Main Menu\n";
+    printThinLine();
+    cout << "Choose lesson: ";
 }
-
+// Pauses the current screen and waits for the user to type 0 before navigating back
 void waitForEnter()
 {
-    cout << "\n";
-    printCenteredText("Press Enter to go back...");
-    showCursor();
-    cin.ignore(1000, '\n');
-    cin.get();
+    cout << "\nType 0 and press Enter to go back: ";
+    string dummy;
+    cin >> dummy;
 }
+

@@ -1,10 +1,10 @@
 ﻿#include <iostream>
-#include <iomanip>
 #include <string>
 #include "test.h"
 #include "gui.h"
 #include "colors.h"
 #include "randomizer.h"
+
 using namespace std;
 
 void runItTest(Question questionBank[], StatisticsData& stats)
@@ -13,21 +13,29 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     printAsciiTitle();
     printCenteredTitle("IT TEST  -  20 QUESTIONS");
 
-    // ── select questions ──────────────────────────────────────────────────────
-    int  selectedIndexes[testQuestionCount];
-    bool used[questionBankSize] = {};
-    int  cur = 0;
+    int selectedIndexes[testQuestionCount];
+    bool used[questionBankSize];
+    for (int i = 0; i < questionBankSize; i++)
+        used[i] = false;
 
+    int cur = 0;
     int needs[3] = { 7, 7, 6 };
     int lo[3] = { 0, 10, 20 };
     int hi[3] = { 9, 19, 29 };
 
     for (int cat = 0; cat < 3; cat++)
+    {
         while (needs[cat] > 0)
         {
             int idx = getRandomInt(lo[cat], hi[cat]);
-            if (!used[idx]) { used[idx] = true; selectedIndexes[cur++] = idx; needs[cat]--; }
+            if (!used[idx])
+            {
+                used[idx] = true;
+                selectedIndexes[cur++] = idx;
+                needs[cat]--;
+            }
         }
+    }
 
     for (int i = 0; i < testQuestionCount - 1; i++)
     {
@@ -37,7 +45,6 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         selectedIndexes[j] = tmp;
     }
 
-    // ── run questions ─────────────────────────────────────────────────────────
     int correct = 0;
     for (int i = 0; i < testQuestionCount; i++)
     {
@@ -52,11 +59,10 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         else if (q.category == 1) stats.cssTotal++;
         else                      stats.jsTotal++;
 
-        string opts[] = {
-            "A)  " + q.optionA,
-            "B)  " + q.optionB,
-            "C)  " + q.optionC
-        };
+        string opts[3];
+        opts[0] = "A)  " + q.optionA;
+        opts[1] = "B)  " + q.optionB;
+        opts[2] = "C)  " + q.optionC;
         int idx = arrowMenu(opts, 3);
         char answer = (char)('A' + idx);
 
@@ -79,7 +85,6 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         cout << "\n";
     }
 
-    // ── result ────────────────────────────────────────────────────────────────
     double pct = (double)correct / testQuestionCount;
     double grade = 2.0;
     if (pct >= 0.90) grade = 6.0;

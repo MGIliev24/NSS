@@ -5,37 +5,45 @@
 
 using namespace std;
 
-// Displays the main menu screen with all primary navigation options
-void showMainMenu()
+int showMainMenu()
 {
     clearScreen();
     printAsciiTitle();
-    // List all available menu options
-    cout << " 1. Lessons\n";
-    cout << " 2. Take IT Test\n";
-    cout << " 3. View Statistics\n";
-    cout << " 0. Exit\n";
-    printThinLine();
-    cout << "Choose option: ";
-}
-// Displays the lessons submenu, listing all available lesson modules
-void showLessonsMenu()
-{
-    clearScreen();
-    printCenteredTitle("LESSON MODULES");
-    // List all available lesson topics
-    cout << " 1. HTML Basics\n";
-    cout << " 2. CSS Basics\n";
-    cout << " 3. JavaScript Basics\n";
-    cout << " 0. Back to Main Menu\n";
-    printThinLine();
-    cout << "Choose lesson: ";
-}
-// Pauses the current screen and waits for the user to type 0 before navigating back
-void waitForEnter()
-{
-    cout << "\nType 0 and press Enter to go back: ";
-    string dummy;
-    cin >> dummy;
+    printCenteredTitle("MAIN MENU");
+    cout << "\n";
+
+    string options[4];
+    options[0] = "Lessons";
+    options[1] = "Take IT Test";
+    options[2] = "View Statistics";
+    options[3] = "Exit";
+    int idx = arrowMenu(options, 4);
+    cout << "\n";
+    return idx;
 }
 
+int showLessonsMenu()
+{
+    clearScreen();
+    printAsciiTitle();
+    printCenteredTitle("LESSON MODULES");
+    cout << "\n";
+
+    string options[4];
+    options[0] = "HTML Basics";
+    options[1] = "CSS Basics";
+    options[2] = "JavaScript Basics";
+    options[3] = "Back to Main Menu";
+    int idx = arrowMenu(options, 4);
+    cout << "\n";
+    return idx;
+}
+
+void waitForEnter()
+{
+    cout << "\n";
+    printCenteredText("Press Enter to go back...");
+    showCursor();
+    cin.ignore(1000, '\n');
+    cin.get();
+}

@@ -5,5 +5,3 @@ void setSeed(unsigned int newSeed);
 int getRandomInt(int minValue, int maxValue);
 
 #endif
-
-

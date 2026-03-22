@@ -1,14 +1,10 @@
-#include <cmath>
 #include "randomizer.h"
 
-unsigned long int currentSeedValue = 1234567;
+static unsigned long int currentSeedValue = 1234567;
 
 void setSeed(unsigned int newSeed)
 {
-    if (newSeed == 0)
-    {
-        newSeed = 1;
-    }
+    if (newSeed == 0) newSeed = 1;
     currentSeedValue = newSeed;
 }
 
@@ -19,4 +15,3 @@ int getRandomInt(int minValue, int maxValue)
     int value = (int)(currentSeedValue % range);
     return minValue + value;
 }
-

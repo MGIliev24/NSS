@@ -4,6 +4,7 @@
 #include "statistics.h"
 #include "colors.h"
 #include "gui.h"
+
 using namespace std;
 
 void initializeStatistics(StatisticsData& stats)
@@ -25,7 +26,7 @@ void updateOverallStatistics(StatisticsData& stats, double grade)
     stats.totalTests++;
     stats.sumOfGrades += grade;
     if (grade > stats.highestGrade) stats.highestGrade = grade;
-    if (grade < stats.lowestGrade) stats.lowestGrade = grade;
+    if (grade < stats.lowestGrade)  stats.lowestGrade = grade;
 }
 
 void showStatistics(const StatisticsData& stats)
@@ -41,7 +42,6 @@ void showStatistics(const StatisticsData& stats)
         return;
     }
 
-    cout << fixed << setprecision(2);
     double averageGrade = stats.sumOfGrades / stats.totalTests;
 
     printSectionTitle("Overall");
@@ -55,30 +55,30 @@ void showStatistics(const StatisticsData& stats)
     double jsPct = stats.jsTotal > 0 ? (double)stats.jsCorrect / stats.jsTotal * 100.0 : 0.0;
 
     printSectionTitle("Category Performance");
+    printLabelValue("HTML      ", to_string((int)htmlPct) + "%");
+    printLabelValue("CSS       ", to_string((int)cssPct) + "%");
+    printLabelValue("JavaScript", to_string((int)jsPct) + "%");
 
-    auto pctStr = [](double v) {
-        // format "XX.XX%"
-        string s = to_string((int)v) + "." + to_string((int)(v * 100) % 100 / 10) + to_string((int)(v * 100) % 10) + "%";
-        return s;
-        };
+    string best = "None";
+    string worst = "None";
+    double bestV = -1.0;
+    double worstV = 101.0;
 
-    printLabelValue("HTML      ", pctStr(htmlPct));
-    printLabelValue("CSS       ", pctStr(cssPct));
-    printLabelValue("JavaScript", pctStr(jsPct));
-
-    // Best / worst
-    string best = "None", worst = "None";
-    double bestV = -1.0, worstV = 101.0;
-
-    auto check = [&](double pct, const string& name, int total) {
-        if (total == 0) return;
-        if (pct > bestV) { bestV = pct; best = name; }
-        if (pct < worstV) { worstV = pct; worst = name; }
-        };
-
-    check(htmlPct, "HTML", stats.htmlTotal);
-    check(cssPct, "CSS", stats.cssTotal);
-    check(jsPct, "JavaScript", stats.jsTotal);
+    if (stats.htmlTotal > 0)
+    {
+        if (htmlPct > bestV) { bestV = htmlPct; best = "HTML"; }
+        if (htmlPct < worstV) { worstV = htmlPct; worst = "HTML"; }
+    }
+    if (stats.cssTotal > 0)
+    {
+        if (cssPct > bestV) { bestV = cssPct; best = "CSS"; }
+        if (cssPct < worstV) { worstV = cssPct; worst = "CSS"; }
+    }
+    if (stats.jsTotal > 0)
+    {
+        if (jsPct > bestV) { bestV = jsPct; best = "JavaScript"; }
+        if (jsPct < worstV) { worstV = jsPct; worst = "JavaScript"; }
+    }
 
     if (best != "None")
     {

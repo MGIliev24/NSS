@@ -7,7 +7,6 @@ struct StatisticsData
     double highestGrade;
     double lowestGrade;
     double sumOfGrades;
-
     int htmlCorrect;
     int htmlTotal;
     int cssCorrect;
@@ -21,5 +20,3 @@ void updateOverallStatistics(StatisticsData& stats, double grade);
 void showStatistics(const StatisticsData& stats);
 
 #endif
-
-

@@ -5,8 +5,6 @@
 
 using namespace std;
 
-// Resets all account slots to an empty, unused state.
-// Must be called once at startup before any authentication logic runs.
 void initializeAccounts(UserAccount accounts[], int size)
 {
     for (int i = 0; i < size; i++)
@@ -17,55 +15,23 @@ void initializeAccounts(UserAccount accounts[], int size)
     }
 }
 
-// Safely reads an integer menu choice within the [minValue, maxValue] range.
-// Rejects non-numeric and out-of-range input, prompting the user to retry.
-static int readAuthChoice(int minValue, int maxValue)
-{
-    int choice;
-    while (true)
-    {
-        cout << "Enter choice (" << minValue << "-" << maxValue << "): ";
-        if (cin >> choice)
-        {
-            if (choice >= minValue && choice <= maxValue)
-            {
-                return choice;
-            }
-        }
-        cin.clear();
-        string dump;
-        getline(cin >> ws, dump);
-        cout << "Invalid input. Try again.\n";
-    }
-}
-
-// Searches the account registry for a matching username among active (used) slots.
-// Returns the index of the account if found, or -1 if no match exists.
 static int findAccountIndex(UserAccount accounts[], int size, const string& username)
 {
     for (int i = 0; i < size; i++)
     {
         if (accounts[i].used && accounts[i].username == username)
-        {
             return i;
-        }
     }
     return -1;
 }
 
-// Registers a new user account if the chosen username is available and a free slot exists.
-// On success, logs the new user in by populating loggedInUser and returns true.
 static bool signUp(UserAccount accounts[], int size, string& loggedInUser)
 {
-    string username;
-    string password;
-
-    cout << "Choose username: ";
-    cin >> username;
+    string username = centeredInput("Choose username: ");
 
     if (findAccountIndex(accounts, size, username) != -1)
     {
-        cout << "Username already exists.\n";
+        printCenteredText("Username already exists.");
         return false;
     }
 
@@ -81,57 +47,41 @@ static bool signUp(UserAccount accounts[], int size, string& loggedInUser)
 
     if (freeIndex == -1)
     {
-        cout << "No free slots for new users.\n";
+        printCenteredText("No free slots.");
         return false;
     }
 
-    cout << "Choose password: ";
-    cin >> password;
-
+    string password = centeredInput("Choose password: ");
     accounts[freeIndex].username = username;
     accounts[freeIndex].password = password;
     accounts[freeIndex].used = true;
-
-    cout << "Account created. You are now logged in as " << username << ".\n";
     loggedInUser = username;
+    printCenteredText("Account created!  Welcome, " + username + ".");
     return true;
 }
 
-
-// Attempts to log in with the provided credentials.
-// Verifies that the username exists and the password matches, then populates loggedInUser.
-// Returns true on successful login, false on any credential mismatch.
 static bool logIn(UserAccount accounts[], int size, string& loggedInUser)
 {
-    string username;
-    string password;
-
-    cout << "Username: ";
-    cin >> username;
-    cout << "Password: ";
-    cin >> password;
+    string username = centeredInput("Username: ");
+    string password = centeredInput("Password: ");
 
     int index = findAccountIndex(accounts, size, username);
     if (index == -1)
     {
-        cout << "No such user.\n";
+        printCenteredText("No such user.");
         return false;
     }
-
     if (accounts[index].password != password)
     {
-        cout << "Wrong password.\n";
+        printCenteredText("Wrong password.");
         return false;
     }
 
-    cout << "Login successful. Welcome, " << username << ".\n";
     loggedInUser = username;
+    printCenteredText("Welcome back, " + username + "!");
     return true;
 }
 
-// Drives the authentication loop, showing the login panel until the user
-// successfully signs up, logs in, or explicitly chooses to exit (option 0).
-// Returns true if a session was established, false if the user chose to exit.
 bool handleAuthentication(UserAccount accounts[], int size, string& loggedInUser)
 {
     bool loggedIn = false;
@@ -140,26 +90,21 @@ bool handleAuthentication(UserAccount accounts[], int size, string& loggedInUser
         clearScreen();
         printAsciiTitle();
         printCenteredTitle("LOGIN PANEL");
-        cout << " 1. Sign up\n";
-        cout << " 2. Log in\n";
-        cout << " 0. Exit\n";
-        printThinLine();
+        cout << "\n";
 
-        int choice = readAuthChoice(0, 2);
+        string options[3];
+        options[0] = "Sign up";
+        options[1] = "Log in";
+        options[2] = "Exit";
+        int choice = arrowMenu(options, 3);
+        cout << "\n";
 
-        if (choice == 1)
-        {
+        if (choice == 0)
             loggedIn = signUp(accounts, size, loggedInUser);
-        }
-        else if (choice == 2)
-        {
+        else if (choice == 1)
             loggedIn = logIn(accounts, size, loggedInUser);
-        }
-        else if (choice == 0)
-        {
+        else
             return false;
-        }
     }
-    return true; // A valid session was established
+    return true;
 }
-

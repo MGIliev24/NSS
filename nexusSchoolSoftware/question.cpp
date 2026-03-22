@@ -3,35 +3,32 @@
 #include "question.h"
 #include "colors.h"
 #include "gui.h"
+
 using namespace std;
 
-// ─── helper: print a bullet point item centered-ish ──────────────────────────
 static void printItem(const string& tag, const string& desc)
 {
-    // "  <h1>   - main heading"
-    // Left-aligned inside the box with a fixed indent
     static const int INDENT = 6;
-    static const int BOX = 72;
-    static const int MARGIN = (100 - BOX) / 2;
     string line = string(INDENT, ' ') + tag + "  -  " + desc;
-    cout << string(MARGIN, ' ') << line << "\n";
+    int p = (92 - (int)line.length()) / 2;
+    if (p < 0) p = 0;
+    cout << string(14, ' ') << string(p, ' ') << line << "\n";
 }
 
-// ─── HTML ─────────────────────────────────────────────────────────────────────
 void showHtmlLesson()
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("HTML BASICS");
-    printCenteredText("HyperText Markup Language — structures web pages.");
+    printCenteredText("HyperText Markup Language - structures web pages.");
     printSectionTitle("Core Elements");
     printItem("<html>", "root element of the page");
     printItem("<head>", "metadata and page information");
     printItem("<body>", "visible content");
-    printItem("<h1>", "main heading  (h1 – h6)");
+    printItem("<h1>", "main heading  (h1 to h6)");
     printItem("<p>", "paragraph");
-    printItem("<a>", "hyperlink  (href=\"url\")");
-    printItem("<img>", "image  (src=\"url\")");
+    printItem("<a>", "hyperlink");
+    printItem("<img>", "image");
     printItem("<ul>/<ol>", "unordered / ordered list");
     printItem("<tr>", "table row");
     printItem("<br>", "line break");
@@ -41,13 +38,12 @@ void showHtmlLesson()
     waitForEnter();
 }
 
-// ─── CSS ──────────────────────────────────────────────────────────────────────
 void showCssLesson()
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("CSS BASICS");
-    printCenteredText("Cascading Style Sheets — controls the visual style of HTML.");
+    printCenteredText("Cascading Style Sheets - controls the visual style of HTML.");
     printSectionTitle("Common Properties");
     printItem("color", "text color");
     printItem("background-color", "background color");
@@ -55,9 +51,9 @@ void showCssLesson()
     printItem("font-family", "typeface / font stack");
     printItem("margin", "space outside the element");
     printItem("padding", "space inside the element border");
-    printItem("p {}", "select all <p> elements");
-    printItem("#main {}", "select element with id=\"main\"");
-    printItem(".card {}", "select elements with class=\"card\"");
+    printItem("p {}", "select all p elements");
+    printItem("#main {}", "select element with id=main");
+    printItem(".card {}", "select elements with class=card");
     printItem("/* comment */", "CSS comment syntax");
     printSectionTitle("Exercise Idea");
     printCenteredText("Style your HTML page: colors, font size, spacing.");
@@ -65,7 +61,6 @@ void showCssLesson()
     waitForEnter();
 }
 
-// ─── JavaScript ───────────────────────────────────────────────────────────────
 void showJsLesson()
 {
     clearScreen();
@@ -88,44 +83,40 @@ void showJsLesson()
     waitForEnter();
 }
 
-// ─── QUESTION BANK ────────────────────────────────────────────────────────────
 void initializeQuestionBank(Question questionBank[], int size)
 {
     if (size < 30) return;
 
-    // HTML  (category 0, indices 0..9)
-    questionBank[0] = { "What does HTML stand for?", "HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", 'A', 0 };
-    questionBank[1] = { "Which tag defines a paragraph?", "<para>", "<p>", "<paragraph>", 'B', 0 };
-    questionBank[2] = { "Which tag creates a hyperlink?", "<link>", "<a>", "<href>", 'B', 0 };
-    questionBank[3] = { "Which tag is the largest heading?", "<h6>", "<head>", "<h1>", 'C', 0 };
-    questionBank[4] = { "Which attribute sets the image source?", "href", "src", "link", 'B', 0 };
-    questionBank[5] = { "Which tag defines an unordered list?", "<ol>", "<ul>", "<list>", 'B', 0 };
-    questionBank[6] = { "Which element holds visible page content?", "<body>", "<head>", "<title>", 'A', 0 };
-    questionBank[7] = { "Which tag defines a table row?", "<tr>", "<td>", "<th>", 'A', 0 };
-    questionBank[8] = { "Which element sets the browser-tab title?", "<meta>", "<title>", "<h1>", 'B', 0 };
-    questionBank[9] = { "Which tag inserts a line break?", "<lb>", "<br>", "<break>", 'B', 0 };
+    questionBank[0] = { "What does HTML stand for?",                    "HyperText Markup Language", "HighText Machine Language",   "Home Tool Markup Language",    'A', 0 };
+    questionBank[1] = { "Which tag defines a paragraph?",               "<para>",                    "<p>",                         "<paragraph>",                  'B', 0 };
+    questionBank[2] = { "Which tag creates a hyperlink?",               "<link>",                    "<a>",                         "<href>",                       'B', 0 };
+    questionBank[3] = { "Which tag is the largest heading?",            "<h6>",                      "<head>",                      "<h1>",                         'C', 0 };
+    questionBank[4] = { "Which attribute sets the image source?",       "href",                      "src",                         "link",                         'B', 0 };
+    questionBank[5] = { "Which tag defines an unordered list?",         "<ol>",                      "<ul>",                        "<list>",                       'B', 0 };
+    questionBank[6] = { "Which element holds visible page content?",    "<body>",                    "<head>",                      "<title>",                      'A', 0 };
+    questionBank[7] = { "Which tag defines a table row?",               "<tr>",                      "<td>",                        "<th>",                         'A', 0 };
+    questionBank[8] = { "Which element sets the browser-tab title?",    "<meta>",                    "<title>",                     "<h1>",                         'B', 0 };
+    questionBank[9] = { "Which tag inserts a line break?",              "<lb>",                      "<br>",                        "<break>",                      'B', 0 };
 
-    // CSS  (category 1, indices 10..19)
-    questionBank[10] = { "What does CSS stand for?", "Cascading Style Sheets", "Creative Style System", "Computer Styled Sheets", 'A', 1 };
-    questionBank[11] = { "Which property changes text color?", "font-color", "color", "text-color", 'B', 1 };
-    questionBank[12] = { "Which property changes the background color?", "background", "bgcolor", "background-color", 'C', 1 };
-    questionBank[13] = { "Which property controls text size?", "font-size", "text-size", "size", 'A', 1 };
-    questionBank[14] = { "How do you select all <p> elements in CSS?", "p {}", "#p {}", ".p {}", 'A', 1 };
-    questionBank[15] = { "How do you select id='main'?", ".main {}", "#main {}", "main {}", 'B', 1 };
-    questionBank[16] = { "Which property sets outer space of an element?", "padding", "margin", "border", 'B', 1 };
-    questionBank[17] = { "Which property sets inner space of an element?", "padding", "margin", "spacing", 'A', 1 };
-    questionBank[18] = { "Which property sets the font type?", "font-family", "font-type", "font-style", 'A', 1 };
-    questionBank[19] = { "How do you write a CSS comment?", "// comment", "<!-- comment -->", "/* comment */", 'C', 1 };
+    questionBank[10] = { "What does CSS stand for?",                     "Cascading Style Sheets",    "Creative Style System",       "Computer Styled Sheets",       'A', 1 };
+    questionBank[11] = { "Which property changes text color?",           "font-color",                "color",                       "text-color",                   'B', 1 };
+    questionBank[12] = { "Which property changes the background color?", "background",                "bgcolor",                     "background-color",             'C', 1 };
+    questionBank[13] = { "Which property controls text size?",           "font-size",                 "text-size",                   "size",                         'A', 1 };
+    questionBank[14] = { "How do you select all p elements in CSS?",     "p {}",                      "#p {}",                       ".p {}",                        'A', 1 };
+    questionBank[15] = { "How do you select id=main?",                   ".main {}",                  "#main {}",                    "main {}",                      'B', 1 };
+    questionBank[16] = { "Which property sets outer space of element?",  "padding",                   "margin",                      "border",                       'B', 1 };
+    questionBank[17] = { "Which property sets inner space of element?",  "padding",                   "margin",                      "spacing",                      'A', 1 };
+    questionBank[18] = { "Which property sets the font type?",           "font-family",               "font-type",                   "font-style",                   'A', 1 };
+    questionBank[19] = { "How do you write a CSS comment?",              "// comment",                "<!-- comment -->",             "/* comment */",                'C', 1 };
 
-    // JavaScript  (category 2, indices 20..29)
-    questionBank[20] = { "Which HTML element holds JavaScript code?", "<js>", "<script>", "<javascript>", 'B', 2 };
-    questionBank[21] = { "How do you show an alert saying 'Hello'?", "alert('Hello');", "msg('Hello');", "alertBox('Hello');", 'A', 2 };
-    questionBank[22] = { "Which keyword declares a block-scoped variable?", "var", "let", "constant", 'B', 2 };
-    questionBank[23] = { "How do you call a function named testFunction?", "call testFunction();", "testFunction();", "run testFunction();", 'B', 2 };
-    questionBank[24] = { "How do you write an if statement in JS?", "if i = 5 then", "if (i == 5)", "if i == 5", 'B', 2 };
-    questionBank[25] = { "How does a while loop start?", "while i < 10", "while (i < 10)", "while (i < 10; i++)", 'B', 2 };
-    questionBank[26] = { "Which method logs to the browser console?", "console.write()", "log.console()", "console.log()", 'C', 2 };
-    questionBank[27] = { "How do you write a single-line comment in JS?", "// comment", "<!-- comment -->", "/* comment */", 'A', 2 };
-    questionBank[28] = { "Which operator adds numbers?", "&", "+", "++", 'B', 2 };
-    questionBank[29] = { "Which event fires on a mouse click?", "onchange", "onclick", "onload", 'B', 2 };
+    questionBank[20] = { "Which HTML element holds JavaScript?",         "<js>",                      "<script>",                    "<javascript>",                 'B', 2 };
+    questionBank[21] = { "How do you show an alert saying Hello?",       "alert('Hello');",           "msg('Hello');",               "alertBox('Hello');",           'A', 2 };
+    questionBank[22] = { "Which keyword declares a block-scoped var?",   "var",                       "let",                         "constant",                     'B', 2 };
+    questionBank[23] = { "How do you call function testFunction?",       "call testFunction();",      "testFunction();",             "run testFunction();",          'B', 2 };
+    questionBank[24] = { "How do you write an if statement in JS?",      "if i = 5 then",             "if (i == 5)",                 "if i == 5",                    'B', 2 };
+    questionBank[25] = { "How does a while loop start?",                 "while i < 10",              "while (i < 10)",              "while (i < 10; i++)",          'B', 2 };
+    questionBank[26] = { "Which method logs to the browser console?",    "console.write()",           "log.console()",               "console.log()",                'C', 2 };
+    questionBank[27] = { "How do you write a single-line comment?",      "// comment",                "<!-- comment -->",             "/* comment */",                'A', 2 };
+    questionBank[28] = { "Which operator adds numbers?",                 "&",                         "+",                           "++",                           'B', 2 };
+    questionBank[29] = { "Which event fires on a mouse click?",          "onchange",                  "onclick",                     "onload",                       'B', 2 };
 }

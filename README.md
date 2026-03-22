@@ -1,179 +1,143 @@
 <div align="center">
-  
+
 # 🎓 Nexus School Software (NSS)
 
-![NSS Logo](https://img.shields.io/badge/Nexus%20School%20Software-v1.0-blue)
-![C++](https://img.shields.io/badge/Language-C%2B%2B-00599C?logo=cplusplus)
-![Status](https://img.shields.io/badge/Status-Active-success)
+![Version](https://img.shields.io/badge/version-1.0-blue)
+![Language](https://img.shields.io/badge/language-C++-00599C?logo=cplusplus)
+![Status](https://img.shields.io/badge/status-active-success)
 
-**An interactive educational software platform for students to learn web development (HTML, CSS, JavaScript) and take IT assessments.**
+**An interactive educational platform for learning web development and testing IT knowledge**
 
 </div>
 
 ---
+
+<div align="center">
 
 ## 📋 Table of Contents
 
-- [About the Project](#about-the-project)
-- [Core Features](#core-features)
-- [Used Technologies](#used-technologies)
-- [Download & Installation](#download--installation)
-- [Project Structure](#project-structure)
-- [Main Functions](#main-functions)
-- [Contributors](#contributors)
+</div>
+
+* [🎯 About the Project](#about-the-project)
+* [🚀 Core Features](#core-features)
+* [🛠️ Used Technologies](#technologies)
+* [📊 System Overview](#system-overview)
+* [📥 Installation](#installation)
 
 ---
 
 <div align="center">
-
-## 🎯 About the Project
-
+<h2 id="about-the-project">🎯 About the Project</h2>
 </div>
 
-**Nexus School Software (NSS)** is a comprehensive C++ educational platform designed to help students learn and master web development fundamentals. The application provides an interactive environment where students can:
+**Nexus School Software (NSS)** is a C++-based educational system designed to help students **learn and practice web development fundamentals** in an interactive way.
 
-- **Access Structured Lessons** on HTML, CSS, and JavaScript basics
-- **Take Randomized Assessments** with a total of 20 questions (7 HTML, 7 CSS, 6 JavaScript)
-- **Track Performance** with detailed statistics and grade calculations
-- **Manage User Accounts** with secure login and registration system
+### ✨ What students can do:
 
-The software uses a unique randomization system where each student receives a personalized question order based on their student ID, ensuring fair and consistent testing experiences.
+* 📚 Study HTML, CSS, and JavaScript
+* 🧠 Take randomized tests
+* 📈 Track performance and progress
+* 🔐 Use a secure account system
 
-### Key Functionality
+### 🧩 Smart System
 
-| Feature | Description |
-|---------|------------|
-| **User Authentication** | Sign up and login system with account management |
-| **Interactive Lessons** | Comprehensive tutorials on HTML, CSS, and JavaScript |
-| **IT Assessment Test** | 20-question randomized test covering all three categories |
-| **Statistics Dashboard** | Detailed performance tracking and grade analysis |
-| **Student ID Seeding** | Personalized question randomization for each student |
-| **Grade Calculation** | Automatic grading on a 2.0-6.0 scale based on percentage |
+Each test is uniquely generated using the student ID as a seed.
 
 ---
 
 <div align="center">
-
-## 🚀 Core Features
-
+<h2 id="core-features">🚀 Core Features</h2>
 </div>
 
-### 1. **Authentication System** (`auth.cpp`)
-- User account registration (Sign up)
-- Secure login with username and password
-- Account validation and duplicate username prevention
-- Support for multiple user accounts
+### 🔐 Authentication System (`auth.cpp`)
 
-### 2. **Lesson Management** (`question.cpp`)
-Three comprehensive lessons:
-- **HTML Basics**: Learn about HTML tags, elements, and structure
-- **CSS Basics**: Understand styling, properties, and CSS selectors
-- **JavaScript Basics**: Master variables, functions, loops, and events
+* Registration & login
+* Duplicate prevention
+* Multi-user support
 
-### 3. **Adaptive Testing** (`test.cpp`)
-- 30 total questions (10 per category)
-- 20-question randomized tests
-- Category distribution: 7 HTML + 7 CSS + 6 JavaScript
-- Real-time answer validation and feedback
-- Automatic grading system
+---
 
-### 4. **Statistics & Analytics** (`statistics.cpp`)
-- Total tests completed tracking
-- Highest and lowest grade records
-- Average grade calculation
-- Per-category performance metrics (HTML, CSS, JavaScript)
-- Best and weakest category identification
+### 📘 Learning Module (`question.cpp`)
 
-### 5. **Input Validation & Error Handling**
-- Robust menu input validation
-- Prevention of invalid numeric entries
-- Graceful error recovery
+* HTML basics
+* CSS styling
+* JavaScript fundamentals
+
+---
+
+### 📝 Testing Engine (`test.cpp`)
+
+* 30-question pool
+* 20 randomized per test
+* Balanced categories
+* Instant grading
+
+---
+
+### 📊 Statistics Dashboard (`statistics.cpp`)
+
+* Total tests taken
+* Highest / lowest score
+* Average performance
+* Category breakdown
+* Strength & weakness detection
+
+---
+
+### ⚙️ Input Validation
+
+* Prevents invalid input
+* Stable execution
 
 ---
 
 <div align="center">
+<h2 id="technologies">🛠️ Used Technologies</h2>
 
-## 🛠️ Used Technologies
+<br>
+
+<a href="https://cplusplus.com/"><img src="https://img.shields.io/badge/C%2B%2B-00599C?logo=cplusplus&logoColor=white&style=for-the-badge" style="margin:0"/></a><a href="https://visualstudio.microsoft.com/"><img src="https://img.shields.io/badge/Visual%20Studio-5C2D91?logo=visualstudio&logoColor=white&style=for-the-badge" style="margin:0"/></a><a href="https://github.com/"><img src="https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white&style=for-the-badge" style="margin:0"/></a><a href="https://www.microsoft.com/microsoft-365/word"><img src="https://img.shields.io/badge/Microsoft%20Word-2B579A?logo=microsoftword&logoColor=white&style=for-the-badge" style="margin:0"/></a><a href="https://www.microsoft.com/microsoft-365/powerpoint"><img src="https://img.shields.io/badge/PowerPoint-B7472A?logo=microsoftpowerpoint&logoColor=white&style=for-the-badge" style="margin:0"/></a><a href="https://www.microsoft.com/microsoft-teams"><img src="https://img.shields.io/badge/Microsoft%20Teams-6264A7?logo=microsoftteams&logoColor=white&style=for-the-badge" style="margin:0"/></a>
 
 </div>
-
-<table>
-<tr>
-<td align="center" width="16.66%">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="50" height="50" alt="C++"/>
-<br/>
-<strong>C++</strong>
-<br/>
-<a href="https://cplusplus.com/" rel="noopener noreferrer">Official Site</a>
-</td>
-<td align="center" width="16.66%">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" width="50" height="50" alt="Visual Studio"/>
-<br/>
-<strong>Visual Studio 2022</strong>
-<br/>
-<a href="https://visualstudio.microsoft.com/" rel="noopener noreferrer">Official Site</a>
-</td>
-<td align="center" width="16.66%">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="50" height="50" alt="GitHub"/>
-<br/>
-<strong>GitHub</strong>
-<br/>
-<a href="https://github.com/" rel="noopener noreferrer">Official Site</a>
-</td>
-<td align="center" width="16.66%">
-<img src="https://img.icons8.com/color/452/microsoft-word-2019--v1.png" width="50" height="50" alt="MS Word"/>
-<br/>
-<strong>Microsoft Word</strong>
-<br/>
-<a href="https://www.microsoft.com/en-us/microsoft-365/word" rel="noopener noreferrer">Official Site</a>
-</td>
-<td align="center" width="16.66%">
-<img src="https://img.icons8.com/color/452/microsoft-powerpoint-2019--v1.png" width="50" height="50" alt="MS PowerPoint"/>
-<br/>
-<strong>Microsoft PowerPoint</strong>
-<br/>
-<a href="https://www.microsoft.com/en-us/microsoft-365/powerpoint" rel="noopener noreferrer">Official Site</a>
-</td>
-<td align="center" width="16.66%">
-<img src="https://img.icons8.com/color/452/microsoft-teams.png" width="50" height="50" alt="MS Teams"/>
-<br/>
-<strong>Microsoft Teams</strong>
-<br/>
-<a href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software" rel="noopener noreferrer">Official Site</a>
-</td>
-</tr>
-</table>
-
-### Technology Stack Details
-
-- **Primary Language**: C++ (Standard Library)
-- **IDE**: Visual Studio 2022 Community/Professional
-- **Version Control**: Git & GitHub
-- **Documentation Tools**: Microsoft Word, PowerPoint
-- **Communication**: Microsoft Teams
-- **Build System**: Visual Studio Project (.vcxproj)
 
 ---
 
 <div align="center">
-
-## 📥 Download & Installation
-
+<h2 id="system-overview">📊 System Overview</h2>
 </div>
 
-### Prerequisites
-- Windows OS (Visual Studio 2022 compatible)
-- Git installed on your system
-- Visual Studio 2022 with C++ development tools
+| Component        | Responsibility       |
+| ---------------- | -------------------- |
+| `auth.cpp`       | User management      |
+| `question.cpp`   | Lessons & content    |
+| `test.cpp`       | Testing logic        |
+| `statistics.cpp` | Performance tracking |
 
-### Clone the Repository
+---
+
+<div align="center">
+<h2 id="installation">📥 Installation</h2>
+</div>
+
+### ⚙️ Requirements
+
+* Windows OS
+* Visual Studio 2022
+* Git
+
+---
+
+### 📦 Setup
 
 ```bash
-# Using HTTPS
 git clone https://github.com/MGIliev24/NSS.git
-
-# Using SSH
-git clone git@github.com:MGIliev24/NSS.git
-
-# Navigate to the project directory
 cd NSS/nexusSchoolSoftware
+```
+
+---
+
+<div align="center">
+
+### ⭐ Consider giving the project a star!
+
+</div>

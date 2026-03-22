@@ -1,170 +1,100 @@
-#include <iostream>
+﻿#include <iostream>
+#include <iomanip>
+#include <string>
 #include "test.h"
 #include "gui.h"
 #include "colors.h"
 #include "randomizer.h"
-
 using namespace std;
-
-static char readAnswer()
-{
-    char answer;
-    while (true)
-    {
-        cout << "Your answer (A, B, C): ";
-        cin >> answer;
-
-        if (answer >= 'a' && answer <= 'z')
-        {
-            answer = (char)(answer - ('a' - 'A'));
-        }
-
-        if (answer == 'A' || answer == 'B' || answer == 'C')
-        {
-            return answer;
-        }
-
-        cout << "Invalid answer. Please enter A, B or C.\n";
-    }
-}
 
 void runItTest(Question questionBank[], StatisticsData& stats)
 {
     clearScreen();
-    printCenteredTitle("NEXUS IT TEST - 20 QUESTIONS");
+    printAsciiTitle();
+    printCenteredTitle("IT TEST  -  20 QUESTIONS");
 
-    int selectedIndexes[testQuestionCount];
-    bool used[questionBankSize];
-    for (int i = 0; i < questionBankSize; i++)
-    {
-        used[i] = false;
-    }
+    // ── select questions ──────────────────────────────────────────────────────
+    int  selectedIndexes[testQuestionCount];
+    bool used[questionBankSize] = {};
+    int  cur = 0;
 
-    int currentIndex = 0;
-    int htmlNeeded = 7;
-    int cssNeeded = 7;
-    int jsNeeded = 6;
+    int needs[3] = { 7, 7, 6 };
+    int lo[3] = { 0, 10, 20 };
+    int hi[3] = { 9, 19, 29 };
 
-    while (htmlNeeded > 0)
-    {
-        int index = getRandomInt(0, 9);
-        if (!used[index])
+    for (int cat = 0; cat < 3; cat++)
+        while (needs[cat] > 0)
         {
-            used[index] = true;
-            selectedIndexes[currentIndex++] = index;
-            htmlNeeded--;
+            int idx = getRandomInt(lo[cat], hi[cat]);
+            if (!used[idx]) { used[idx] = true; selectedIndexes[cur++] = idx; needs[cat]--; }
         }
-    }
-
-    while (cssNeeded > 0)
-    {
-        int index = getRandomInt(10, 19);
-        if (!used[index])
-        {
-            used[index] = true;
-            selectedIndexes[currentIndex++] = index;
-            cssNeeded--;
-        }
-    }
-
-    while (jsNeeded > 0)
-    {
-        int index = getRandomInt(20, 29);
-        if (!used[index])
-        {
-            used[index] = true;
-            selectedIndexes[currentIndex++] = index;
-            jsNeeded--;
-        }
-    }
 
     for (int i = 0; i < testQuestionCount - 1; i++)
     {
         int j = getRandomInt(i, testQuestionCount - 1);
-        int temp = selectedIndexes[i];
+        int tmp = selectedIndexes[i];
         selectedIndexes[i] = selectedIndexes[j];
-        selectedIndexes[j] = temp;
+        selectedIndexes[j] = tmp;
     }
 
-    int correctAnswers = 0;
-
+    // ── run questions ─────────────────────────────────────────────────────────
+    int correct = 0;
     for (int i = 0; i < testQuestionCount; i++)
     {
-        int index = selectedIndexes[i];
-        Question q = questionBank[index];
+        Question& q = questionBank[selectedIndexes[i]];
 
-        cout << "\nQuestion " << (i + 1) << " of " << testQuestionCount << ":\n";
-        printThinLine();
-        cout << q.text << "\n";
-        cout << " A) " << q.optionA << "\n";
-        cout << " B) " << q.optionB << "\n";
-        cout << " C) " << q.optionC << "\n";
+        printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(testQuestionCount));
+        cout << "\n";
+        printCenteredText(q.text);
+        cout << "\n";
 
-        char answer = readAnswer();
+        if (q.category == 0) stats.htmlTotal++;
+        else if (q.category == 1) stats.cssTotal++;
+        else                      stats.jsTotal++;
 
-        if (q.category == 0)
-        {
-            stats.htmlTotal++;
-        }
-        else if (q.category == 1)
-        {
-            stats.cssTotal++;
-        }
-        else if (q.category == 2)
-        {
-            stats.jsTotal++;
-        }
+        string opts[] = {
+            "A)  " + q.optionA,
+            "B)  " + q.optionB,
+            "C)  " + q.optionC
+        };
+        int idx = arrowMenu(opts, 3);
+        char answer = (char)('A' + idx);
 
         if (answer == q.correctAnswer)
         {
-            cout << "Correct!\n";
-            correctAnswers++;
-
-            if (q.category == 0)
-            {
-                stats.htmlCorrect++;
-            }
-            else if (q.category == 1)
-            {
-                stats.cssCorrect++;
-            }
-            else if (q.category == 2)
-            {
-                stats.jsCorrect++;
-            }
+            cout << "\n" << getMintColor();
+            printCenteredText("Correct!");
+            cout << getResetColor();
+            correct++;
+            if (q.category == 0) stats.htmlCorrect++;
+            else if (q.category == 1) stats.cssCorrect++;
+            else                      stats.jsCorrect++;
         }
         else
         {
-            cout << "Wrong. Correct answer is " << q.correctAnswer << ".\n";
+            cout << "\n" << getRoseColor();
+            printCenteredText("Wrong!  Correct answer: " + string(1, q.correctAnswer));
+            cout << getResetColor();
         }
+        cout << "\n";
     }
 
-    double percent = (double)correctAnswers / (double)testQuestionCount;
+    // ── result ────────────────────────────────────────────────────────────────
+    double pct = (double)correct / testQuestionCount;
     double grade = 2.0;
+    if (pct >= 0.90) grade = 6.0;
+    else if (pct >= 0.75) grade = 5.0;
+    else if (pct >= 0.60) grade = 4.0;
+    else if (pct >= 0.45) grade = 3.0;
 
-    if (percent >= 0.90)
-    {
-        grade = 6.0;
-    }
-    else if (percent >= 0.75)
-    {
-        grade = 5.0;
-    }
-    else if (percent >= 0.60)
-    {
-        grade = 4.0;
-    }
-    else if (percent >= 0.45)
-    {
-        grade = 3.0;
-    }
+    string scoreStr = to_string(correct) + " / " + to_string(testQuestionCount)
+        + "   (" + to_string((int)(pct * 100)) + "%)";
 
     printSectionTitle("TEST RESULT");
-    cout << "Correct answers : " << correctAnswers << " / " << testQuestionCount << "\n";
-    cout << "Score percent   : " << percent * 100.0 << "%\n";
-    cout << "Final grade     : " << grade << "\n";
+    printLabelValue("Score ", scoreStr);
+    printLabelValue("Grade ", to_string((int)grade) + " / 6");
+    cout << "\n";
 
     updateOverallStatistics(stats, grade);
     waitForEnter();
 }
-

@@ -4,7 +4,6 @@
 #include "statistics.h"
 #include "colors.h"
 #include "gui.h"
-
 using namespace std;
 
 void initializeStatistics(StatisticsData& stats)
@@ -25,112 +24,69 @@ void updateOverallStatistics(StatisticsData& stats, double grade)
 {
     stats.totalTests++;
     stats.sumOfGrades += grade;
-    if (grade > stats.highestGrade)
-    {
-        stats.highestGrade = grade;
-    }
-    if (grade < stats.lowestGrade)
-    {
-        stats.lowestGrade = grade;
-    }
+    if (grade > stats.highestGrade) stats.highestGrade = grade;
+    if (grade < stats.lowestGrade) stats.lowestGrade = grade;
 }
 
 void showStatistics(const StatisticsData& stats)
 {
     clearScreen();
+    printAsciiTitle();
     printCenteredTitle("SYSTEM STATISTICS");
 
     if (stats.totalTests == 0)
     {
-        cout << "No tests have been completed yet.\n";
+        printCenteredText("No tests have been completed yet.");
         waitForEnter();
         return;
     }
 
+    cout << fixed << setprecision(2);
     double averageGrade = stats.sumOfGrades / stats.totalTests;
 
-    cout << fixed << setprecision(2);
-    cout << "Total tests taken : " << stats.totalTests << "\n";
-    cout << "Highest grade     : " << stats.highestGrade << "\n";
-    cout << "Lowest grade      : " << stats.lowestGrade << "\n";
-    cout << "Average grade     : " << averageGrade << "\n\n";
+    printSectionTitle("Overall");
+    printLabelValue("Total tests taken", to_string(stats.totalTests));
+    printLabelValue("Highest grade    ", to_string(stats.highestGrade).substr(0, 4));
+    printLabelValue("Lowest grade     ", to_string(stats.lowestGrade).substr(0, 4));
+    printLabelValue("Average grade    ", to_string(averageGrade).substr(0, 4));
 
-    printSectionTitle("Category performance");
+    double htmlPct = stats.htmlTotal > 0 ? (double)stats.htmlCorrect / stats.htmlTotal * 100.0 : 0.0;
+    double cssPct = stats.cssTotal > 0 ? (double)stats.cssCorrect / stats.cssTotal * 100.0 : 0.0;
+    double jsPct = stats.jsTotal > 0 ? (double)stats.jsCorrect / stats.jsTotal * 100.0 : 0.0;
 
-    double htmlPercent = 0.0;
-    double cssPercent = 0.0;
-    double jsPercent = 0.0;
+    printSectionTitle("Category Performance");
 
-    if (stats.htmlTotal > 0)
+    auto pctStr = [](double v) {
+        // format "XX.XX%"
+        string s = to_string((int)v) + "." + to_string((int)(v * 100) % 100 / 10) + to_string((int)(v * 100) % 10) + "%";
+        return s;
+        };
+
+    printLabelValue("HTML      ", pctStr(htmlPct));
+    printLabelValue("CSS       ", pctStr(cssPct));
+    printLabelValue("JavaScript", pctStr(jsPct));
+
+    // Best / worst
+    string best = "None", worst = "None";
+    double bestV = -1.0, worstV = 101.0;
+
+    auto check = [&](double pct, const string& name, int total) {
+        if (total == 0) return;
+        if (pct > bestV) { bestV = pct; best = name; }
+        if (pct < worstV) { worstV = pct; worst = name; }
+        };
+
+    check(htmlPct, "HTML", stats.htmlTotal);
+    check(cssPct, "CSS", stats.cssTotal);
+    check(jsPct, "JavaScript", stats.jsTotal);
+
+    if (best != "None")
     {
-        htmlPercent = (double)stats.htmlCorrect / (double)stats.htmlTotal * 100.0;
-    }
-    if (stats.cssTotal > 0)
-    {
-        cssPercent = (double)stats.cssCorrect / (double)stats.cssTotal * 100.0;
-    }
-    if (stats.jsTotal > 0)
-    {
-        jsPercent = (double)stats.jsCorrect / (double)stats.jsTotal * 100.0;
-    }
-
-    cout << "HTML       : " << htmlPercent << "%\n";
-    cout << "CSS        : " << cssPercent << "%\n";
-    cout << "JavaScript : " << jsPercent << "%\n\n";
-
-    string bestCategory = "None";
-    string worstCategory = "None";
-    double bestValue = -1.0;
-    double worstValue = 101.0;
-
-    if (stats.htmlTotal > 0)
-    {
-        if (htmlPercent > bestValue)
-        {
-            bestValue = htmlPercent;
-            bestCategory = "HTML";
-        }
-        if (htmlPercent < worstValue)
-        {
-            worstValue = htmlPercent;
-            worstCategory = "HTML";
-        }
+        printSectionTitle("Highlights");
+        printLabelValue("Best category   ", best);
+        printLabelValue("Weakest category", worst);
     }
 
-    if (stats.cssTotal > 0)
-    {
-        if (cssPercent > bestValue)
-        {
-            bestValue = cssPercent;
-            bestCategory = "CSS";
-        }
-        if (cssPercent < worstValue)
-        {
-            worstValue = cssPercent;
-            worstCategory = "CSS";
-        }
-    }
-
-    if (stats.jsTotal > 0)
-    {
-        if (jsPercent > bestValue)
-        {
-            bestValue = jsPercent;
-            bestCategory = "JavaScript";
-        }
-        if (jsPercent < worstValue)
-        {
-            worstValue = jsPercent;
-            worstCategory = "JavaScript";
-        }
-    }
-
-    if (bestCategory != "None")
-    {
-        cout << "Best category   : " << bestCategory << "\n";
-        cout << "Weakest category: " << worstCategory << "\n";
-    }
-
+    cout << "\n";
     waitForEnter();
 }
-

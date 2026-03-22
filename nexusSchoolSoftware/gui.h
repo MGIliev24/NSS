@@ -1,9 +1,9 @@
 #ifndef GUI_H
 #define GUI_H
 
-void showMainMenu();
-void showLessonsMenu();
+// Both return 0-based index of selected option
+int showMainMenu();
+int showLessonsMenu();
+
 void waitForEnter();
-
 #endif
-

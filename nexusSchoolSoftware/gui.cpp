@@ -2,37 +2,37 @@
 #include <string>
 #include "gui.h"
 #include "colors.h"
-
 using namespace std;
 
-void showMainMenu()
+int showMainMenu()
 {
     clearScreen();
     printAsciiTitle();
-    cout << " 1. Lessons\n";
-    cout << " 2. Take IT Test\n";
-    cout << " 3. View Statistics\n";
-    cout << " 0. Exit\n";
-    printThinLine();
-    cout << "Choose option: ";
+    printCenteredTitle("MAIN MENU");
+    cout << "\n";
+    string options[] = { "Lessons", "Take IT Test", "View Statistics", "Exit" };
+    int idx = arrowMenu(options, 4);
+    cout << "\n";
+    return idx;
 }
 
-void showLessonsMenu()
+int showLessonsMenu()
 {
     clearScreen();
+    printAsciiTitle();
     printCenteredTitle("LESSON MODULES");
-    cout << " 1. HTML Basics\n";
-    cout << " 2. CSS Basics\n";
-    cout << " 3. JavaScript Basics\n";
-    cout << " 0. Back to Main Menu\n";
-    printThinLine();
-    cout << "Choose lesson: ";
+    cout << "\n";
+    string options[] = { "HTML Basics", "CSS Basics", "JavaScript Basics", "Back to Main Menu" };
+    int idx = arrowMenu(options, 4);
+    cout << "\n";
+    return idx;
 }
 
 void waitForEnter()
 {
-    cout << "\nType 0 and press Enter to go back: ";
-    string dummy;
-    cin >> dummy;
+    cout << "\n";
+    printCenteredText("Press Enter to go back...");
+    showCursor();
+    cin.ignore(1000, '\n');
+    cin.get();
 }
-

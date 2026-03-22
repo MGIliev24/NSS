@@ -165,7 +165,7 @@ int arrowMenu(const string items[], int count)
     }
 }
 
-// ─── CENTERED INPUT ──────────────────────────────────────────────────────────
+// ─── CENTERED INPUT ─────────────────────────────────────────────────────────
 string centeredInput(const string& prompt)
 {
     showCursor();

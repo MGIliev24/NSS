@@ -11,7 +11,7 @@
 using namespace std;
 
 int main()
-{
+{  //Initialize user accounts
     UserAccount accounts[maxAccounts];
     initializeAccounts(accounts, maxAccounts);
     string loggedInUser;

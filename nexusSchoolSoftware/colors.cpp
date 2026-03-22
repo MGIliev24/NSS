@@ -78,7 +78,7 @@ void printLabelValue(const string& label, const string& value)
 }
 
 void printAsciiTitle()
-{
+{   //logo
     const string lines[4] =
     {
         " _____                            _           _            ___ _                     ",

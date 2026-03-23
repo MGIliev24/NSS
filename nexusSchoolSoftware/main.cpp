@@ -19,9 +19,9 @@ int main()
     // If the user exits the auth screen without logging in, close the app cleanly
     if (!handleAuthentication(accounts, maxAccounts, loggedInUser))
     {
-        clearScreen();
-        printAsciiTitle();
-        printCenteredTitle("GOODBYE");
+		clearScreen(); // Clear the screen before showing the goodbye message
+		printAsciiTitle();  
+		printCenteredTitle("GOODBYE");  // Show a goodbye message if the user exits from the authentication screen
         printCenteredText("Exiting Nexus School Software.  See you next time!");
         cout << "\n";
         return 0;
@@ -30,7 +30,7 @@ int main()
     // Use the student ID as a seed so question order is consistent per student
     clearScreen();
     printAsciiTitle();
-    printCenteredTitle("STUDENT ID");
+	printCenteredTitle("STUDENT ID"); // Prompt the user for their student ID to use as a seed for randomization
     string idStr = centeredInput("Enter your numeric student ID: ");
     unsigned int studentId = 0;
 
@@ -59,7 +59,7 @@ int main()
             // Lesson sub-loop — stays inside the lessons menu until "Back" is chosen
             int lessonChoice = -1;
             while (lessonChoice != 3)
-            {
+			{   // Show the lessons menu and call the appropriate function based on the user's choice
                 lessonChoice = showLessonsMenu();
                 if (lessonChoice == 0)      showHtmlLesson();
                 else if (lessonChoice == 1) showCssLesson();

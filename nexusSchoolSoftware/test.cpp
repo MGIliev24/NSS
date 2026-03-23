@@ -49,7 +49,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     for (int i = 0; i < testQuestionCount; i++)
 	{ // Display question and options
         Question& q = questionBank[selectedIndexes[i]];
-
+        
         printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(testQuestionCount));
         cout << "\n";
         printCenteredText(q.text);
@@ -58,7 +58,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         if (q.category == 0) stats.htmlTotal++;
         else if (q.category == 1) stats.cssTotal++;
         else                      stats.jsTotal++;
-
+		// Display options and get answer
         string opts[3];
         opts[0] = "A)  " + q.optionA;
         opts[1] = "B)  " + q.optionB;
@@ -76,7 +76,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
             else if (q.category == 1) stats.cssCorrect++;
             else                      stats.jsCorrect++;
         }
-        else
+		else  // Show correct answer if wrong
         {
             cout << "\n" << getRoseColor();
             printCenteredText("Wrong!  Correct answer: " + string(1, q.correctAnswer));
@@ -91,7 +91,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     else if (pct >= 0.75) grade = 5.0;
     else if (pct >= 0.60) grade = 4.0;
     else if (pct >= 0.45) grade = 3.0;
-
+	// Display results
     string scoreStr = to_string(correct) + " / " + to_string(testQuestionCount)
         + "   (" + to_string((int)(pct * 100)) + "%)";
 

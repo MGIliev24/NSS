@@ -3,7 +3,7 @@
 #include "gui.h"
 #include "colors.h"
 using namespace std;
-
+// This file contains functions for rendering the console-based user interface of the IT learning application.
 // Renders the main menu and returns the index of the option the user selected:
 //   0 = Lessons  |  1 = Take IT Test  |  2 = View Statistics  |  3 = Exit
 int showMainMenu()
@@ -12,7 +12,7 @@ int showMainMenu()
     printAsciiTitle();
     printCenteredTitle("MAIN MENU");
     cout << "\n";
-
+    
     string options[4];
     options[0] = "Lessons";
     options[1] = "Take IT Test";
@@ -31,7 +31,7 @@ int showLessonsMenu()
     printAsciiTitle();
     printCenteredTitle("LESSON MODULES");
     cout << "\n";
-
+    
     string options[4];
     options[0] = "HTML Basics";
     options[1] = "CSS Basics";

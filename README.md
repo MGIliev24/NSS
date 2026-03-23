@@ -22,6 +22,7 @@
 * [🚀 Core Features](#core-features)
 * [🛠️ Used Technologies](#technologies)
 * [📊 System Overview](#system-overview)
+* [👥 Contributors](#contributors)
 * [📥 Installation](#installation)
 
 ---
@@ -116,6 +117,40 @@ Each test is uniquely generated using the student ID as a seed.
 ---
 
 <div align="center">
+<h2 id="contributors">👥 Contributors</h2>
+</div>
+
+<table>
+  <tr>
+    <td align="center" width="250">
+      <img src="https://github.com/MGIliev24/NSS/raw/main/assets/altai.jpg" width="120" height="120" style="border-radius: 50%; border: 3px solid #0078d4;" alt="Altai"><br><br>
+      <b>Алтай Йеменджиев</b><br>
+      <sub>🎯 Scrum Trainer</sub>
+    </td>
+    <td align="center" width="250">
+      <img src="https://github.com/MGIliev24/NSS/raw/main/assets/az.jpg" width="120" height="120" style="border-radius: 50%; border: 3px solid #0078d4;" alt="Miroslav"><br><br>
+      <b>Мирослав Илиев</b><br>
+      <sub>⚙️ Back-End Developer</sub>
+    </td>
+  </tr>
+  <tr height="50"></tr>
+  <tr>
+    <td align="center" width="250">
+      <img src="https://github.com/MGIliev24/NSS/raw/main/assets/jordan.jpg" width="120" height="120" style="border-radius: 50%; border: 3px solid #0078d4;" alt="Jordan"><br><br>
+      <b>Йордан Райнов</b><br>
+      <sub>🎨 Front-End Developer</sub>
+    </td>
+    <td align="center" width="250">
+      <img src="https://github.com/MGIliev24/NSS/raw/main/assets/artem.jpg" width="120" height="120" style="border-radius: 50%; border: 3px solid #0078d4;" alt="Artem"><br><br>
+      <b>Артем Бок</b><br>
+      <sub>🖌️ Designer</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+<div align="center">
 <h2 id="installation">📥 Installation</h2>
 </div>
 
@@ -134,10 +169,6 @@ git clone https://github.com/MGIliev24/NSS.git
 cd NSS/nexusSchoolSoftware
 ```
 
----
-
 <div align="center">
-
-### ⭐ Consider giving the project a star!
-
+<h1>⭐ Consider giving the project a star!</h1>
 </div>

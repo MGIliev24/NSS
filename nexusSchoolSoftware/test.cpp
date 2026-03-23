@@ -6,13 +6,13 @@
 #include "randomizer.h"
 
 using namespace std;
-
+// main function to run the IT test
 void runItTest(Question questionBank[], StatisticsData& stats)
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("IT TEST  -  20 QUESTIONS");
-
+	// Select 20 questions with category distribution: 7 HTML, 7 CSS, 6 JS
     int selectedIndexes[testQuestionCount];
     bool used[questionBankSize];
     for (int i = 0; i < questionBankSize; i++)
@@ -38,7 +38,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     }
 
     for (int i = 0; i < testQuestionCount - 1; i++)
-    {
+	{ //Shuffle selected questions
         int j = getRandomInt(i, testQuestionCount - 1);
         int tmp = selectedIndexes[i];
         selectedIndexes[i] = selectedIndexes[j];
@@ -47,7 +47,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
 
     int correct = 0;
     for (int i = 0; i < testQuestionCount; i++)
-    {
+	{ // Display question and options
         Question& q = questionBank[selectedIndexes[i]];
 
         printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(testQuestionCount));
@@ -84,7 +84,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         }
         cout << "\n";
     }
-
+	// Calculate grade
     double pct = (double)correct / testQuestionCount;
     double grade = 2.0;
     if (pct >= 0.90) grade = 6.0;

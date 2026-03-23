@@ -65,7 +65,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         opts[2] = "C)  " + q.optionC;
         int idx = arrowMenu(opts, 3);
         char answer = (char)('A' + idx);
-
+		// Check answer and update stats
         if (answer == q.correctAnswer)
         {
             cout << "\n" << getMintColor();

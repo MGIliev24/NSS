@@ -79,7 +79,7 @@ void showStatistics(const StatisticsData& stats)
         if (jsPct > bestV) { bestV = jsPct; best = "JavaScript"; }
         if (jsPct < worstV) { worstV = jsPct; worst = "JavaScript"; }
     }
-
+	// Display highlights if there is a best category
     if (best != "None")
     {
         printSectionTitle("Highlights");

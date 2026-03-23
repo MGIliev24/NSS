@@ -53,3 +53,4 @@ void waitForEnter()
     showCursor();
     cin.ignore(1000, '\n');  // Flush any leftover newline from a previous cin >> read
     cin.get();               // Block until the user actually presses
+}

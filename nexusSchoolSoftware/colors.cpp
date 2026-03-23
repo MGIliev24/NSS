@@ -204,4 +204,9 @@ string centeredInput(const string& prompt)
 {
     showCursor();
     printCenteredText(prompt);
-    cout << margin() << pad((BOX_WIDTH - 20) / 2);  // Indent the input caret to match th
+    cout << margin() << pad((BOX_WIDTH - 20) / 2);
+    string value;
+    cin >> value;
+    cin.ignore();
+    return value;
+}

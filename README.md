@@ -93,13 +93,7 @@ Each test is uniquely generated using the student ID as a seed.
 
 <br>
 
-<a href="documentation/presentation.pptx">
-  <img src="https://img.shields.io/badge/Presentation-View-blue?style=for-the-badge&logo=microsoftpowerpoint&logoColor=white" />
-</a>
-
-<a href="documentation/documentation.docx">
-  <img src="https://img.shields.io/badge/Documentation-Read-green?style=for-the-badge&logo=microsoftword&logoColor=white" />
-</a>
+<a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/MGIliev24/NSS/main/documentation/presentation.pptx"><img src="https://img.shields.io/badge/Presentation-View-blue?style=for-the-badge&logo=microsoftpowerpoint&logoColor=white" /></a><a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/MGIliev24/NSS/main/documentation/documentation.docx"><img src="https://img.shields.io/badge/Documentation-Read-green?style=for-the-badge&logo=microsoftword&logoColor=white" /></a>
 
 </div>
 

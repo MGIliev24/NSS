@@ -1,10 +1,13 @@
 <div align="center">
 
+<img src="https://github.com/MGIliev24/NSS/raw/main/assets/logo.png" width="300" height="300" alt="NSS Logo">
+
 # 🎓 Nexus School Software (NSS)
 
 ![Version](https://img.shields.io/badge/version-1.0-blue)
 ![Language](https://img.shields.io/badge/language-C++-00599C?logo=cplusplus)
 ![Status](https://img.shields.io/badge/status-active-success)
+
 
 **An interactive educational platform for learning web development and testing IT knowledge**
 
@@ -82,6 +85,23 @@ Each test is uniquely generated using the student ID as a seed.
 * Average performance
 * Category breakdown
 * Strength & weakness detection
+
+  ---
+
+<div align="center">
+<h2 id="resources">📄 Project Resources</h2>
+
+<br>
+
+<a href="documentation/presentation.pptx">
+  <img src="https://img.shields.io/badge/Presentation-View-blue?style=for-the-badge&logo=microsoftpowerpoint&logoColor=white" />
+</a>
+
+<a href="documentation/documentation.docx">
+  <img src="https://img.shields.io/badge/Documentation-Read-green?style=for-the-badge&logo=microsoftword&logoColor=white" />
+</a>
+
+</div>
 
 ---
 
@@ -167,8 +187,3 @@ Each test is uniquely generated using the student ID as a seed.
 ```bash
 git clone https://github.com/MGIliev24/NSS.git
 cd NSS/nexusSchoolSoftware
-```
-
-<div align="center">
-<h1>⭐ Consider giving the project a star!</h1>
-</div>

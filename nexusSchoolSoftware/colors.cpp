@@ -106,7 +106,7 @@ void printAsciiTitle()
         "| | | | -_|_'_| | |_ -|  |_ -|  _|   | . | . | |  |_ -| . |  _|  _| | | | .'|  _| -_|",
         "|_|___|___|_,_|___|___|  |___|___|_|_|___|___|_|  |___|___|_| |_| |_____|__,|_| |___|"
     };
-	// The logo is wide enough that it doesn't need centering, but we still want to apply the left margin and color
+    // The logo is wide enough that it doesn't need centering, but we still want to apply the left margin and color
     cout << getRoseColor();
     for (int i = 0; i < 4; i++)
     {
@@ -139,8 +139,10 @@ int arrowMenu(const string items[], int count)
     GetConsoleMode(hIn, &oldInMode);
     SetConsoleMode(hIn, ENABLE_EXTENDED_FLAGS);
 
-    // Save cursor position so we can redraw the menu in place on each keystroke
-    cout << "\033[s";
+    // Get current cursor position for restoring between redraws
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(hOut, &csbi);
+    COORD startPos = csbi.dwCursorPosition;
 
     // Initial render of all menu items
     for (int i = 0; i < count; i++)
@@ -154,7 +156,8 @@ int arrowMenu(const string items[], int count)
             << "          \n";  // Trailing spaces overwrite any leftover characters on redraw
     }
     cout.flush();
-	// Main input loop: read key events and update the menu accordingly
+
+    // Main input loop: read key events and update the menu accordingly
     bool running = true;
     while (running)
     {
@@ -177,8 +180,8 @@ int arrowMenu(const string items[], int count)
                 break;
             }
 
-            // Restore saved cursor position and redraw the full menu in place
-            cout << "\033[u";
+            // Move cursor back to start position and redraw the full menu in place
+            SetConsoleCursorPosition(hOut, startPos);
             for (int i = 0; i < count; i++)
             {
                 string arrow = (i == selected)
@@ -191,9 +194,14 @@ int arrowMenu(const string items[], int count)
             cout.flush();
         }
     }
-	// After selection, move cursor to the line below the menu and return the chosen index
+
+    // After selection, move cursor to the line below the menu and return the chosen index
     cout << "\n";
     showCursor();
+
+    // Flush any remaining input events from the buffer before restoring input mode
+    FlushConsoleInputBuffer(hIn);
+
     SetConsoleMode(hIn, oldInMode);  // Restore original input mode before returning
     return selected;
 }

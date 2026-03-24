@@ -51,6 +51,10 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     int correct = 0;
     for (int i = 0; i < testQuestionCount; i++)
     {
+        clearScreen();
+        printAsciiTitle();
+        printCenteredTitle("IT TEST  -  20 QUESTIONS");
+        
         Question& q = questionBank[selectedIndexes[i]];
 
         printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(testQuestionCount));
@@ -100,6 +104,10 @@ void runItTest(Question questionBank[], StatisticsData& stats)
     string scoreStr = to_string(correct) + " / " + to_string(testQuestionCount)
         + "   (" + to_string((int)(pct * 100)) + "%)";
 
+    clearScreen();
+    printAsciiTitle();
+    printCenteredTitle("IT TEST  -  20 QUESTIONS");
+    
     printSectionTitle("TEST RESULT");
     printLabelValue("Score ", scoreStr);
     printLabelValue("Grade ", to_string((int)grade) + " / 6");

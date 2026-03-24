@@ -40,6 +40,10 @@ static void runHomeworkTest(HomeworkRecord& record,
     int correct = 0;
     for (int i = 0; i < hwQuestionCount; i++)
     {
+        clearScreen();
+        printAsciiTitle();
+        printCenteredTitle(assignment.title);
+        
         Question& q = questionBank[assignment.questionIndexes[i]];
 
         printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(hwQuestionCount));
@@ -74,6 +78,10 @@ static void runHomeworkTest(HomeworkRecord& record,
     record.score = correct;
     record.status = DONE;
 
+    clearScreen();
+    printAsciiTitle();
+    printCenteredTitle(assignment.title);
+    
     double pct = (double)correct / hwQuestionCount * 100.0;
     printSectionTitle("HOMEWORK RESULT");
     printLabelValue("Score  ", to_string(correct) + " / " + to_string(hwQuestionCount));

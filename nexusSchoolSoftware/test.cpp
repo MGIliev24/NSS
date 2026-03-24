@@ -6,13 +6,15 @@
 #include "randomizer.h"
 
 using namespace std;
-// main function to run the IT test
+
+// Runs a 20-question test drawn from the question bank and updates the user's stats
 void runItTest(Question questionBank[], StatisticsData& stats)
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("IT TEST  -  20 QUESTIONS");
-	// Select 20 questions with category distribution: 7 HTML, 7 CSS, 6 JS
+
+    // Select 20 questions with category distribution: 7 HTML, 7 CSS, 6 JS
     int selectedIndexes[testQuestionCount];
     bool used[questionBankSize];
     for (int i = 0; i < questionBankSize; i++)
@@ -37,8 +39,9 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         }
     }
 
+    // Shuffle selected questions for variety
     for (int i = 0; i < testQuestionCount - 1; i++)
-	{ //Shuffle selected questions
+    {
         int j = getRandomInt(i, testQuestionCount - 1);
         int tmp = selectedIndexes[i];
         selectedIndexes[i] = selectedIndexes[j];
@@ -47,9 +50,9 @@ void runItTest(Question questionBank[], StatisticsData& stats)
 
     int correct = 0;
     for (int i = 0; i < testQuestionCount; i++)
-	{ // Display question and options
+    {
         Question& q = questionBank[selectedIndexes[i]];
-        
+
         printSectionTitle("Question " + to_string(i + 1) + " of " + to_string(testQuestionCount));
         cout << "\n";
         printCenteredText(q.text);
@@ -58,14 +61,15 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         if (q.category == 0) stats.htmlTotal++;
         else if (q.category == 1) stats.cssTotal++;
         else                      stats.jsTotal++;
-		// Display options and get answer
+
+        // Display answer choices via arrow-key menu
         string opts[3];
         opts[0] = "A)  " + q.optionA;
         opts[1] = "B)  " + q.optionB;
         opts[2] = "C)  " + q.optionC;
         int idx = arrowMenu(opts, 3);
         char answer = (char)('A' + idx);
-		// Check answer and update stats
+
         if (answer == q.correctAnswer)
         {
             cout << "\n" << getMintColor();
@@ -76,7 +80,7 @@ void runItTest(Question questionBank[], StatisticsData& stats)
             else if (q.category == 1) stats.cssCorrect++;
             else                      stats.jsCorrect++;
         }
-		else  // Show correct answer if wrong
+        else
         {
             cout << "\n" << getRoseColor();
             printCenteredText("Wrong!  Correct answer: " + string(1, q.correctAnswer));
@@ -84,14 +88,15 @@ void runItTest(Question questionBank[], StatisticsData& stats)
         }
         cout << "\n";
     }
-	// Calculate grade
+
+    // Calculate grade on Bulgarian 2–6 scale
     double pct = (double)correct / testQuestionCount;
     double grade = 2.0;
     if (pct >= 0.90) grade = 6.0;
     else if (pct >= 0.75) grade = 5.0;
     else if (pct >= 0.60) grade = 4.0;
     else if (pct >= 0.45) grade = 3.0;
-	// Display results
+
     string scoreStr = to_string(correct) + " / " + to_string(testQuestionCount)
         + "   (" + to_string((int)(pct * 100)) + "%)";
 

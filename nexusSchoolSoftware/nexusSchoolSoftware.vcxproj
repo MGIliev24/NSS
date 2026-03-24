@@ -126,6 +126,7 @@
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="colors.cpp" />
     <ClCompile Include="gui.cpp" />
+    <ClCompile Include="homework.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="question.cpp" />
     <ClCompile Include="randomizer.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="auth.h" />
     <ClInclude Include="colors.h" />
     <ClInclude Include="gui.h" />
+    <ClInclude Include="homework.h" />
     <ClInclude Include="question.h" />
     <ClInclude Include="randomizer.h" />
     <ClInclude Include="statistics.h" />

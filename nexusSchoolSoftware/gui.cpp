@@ -2,55 +2,54 @@
 #include <string>
 #include "gui.h"
 #include "colors.h"
+
 using namespace std;
-// This file contains functions for rendering the console-based user interface of the IT learning application.
-// Renders the main menu and returns the index of the option the user selected:
-//   0 = Lessons  |  1 = Take IT Test  |  2 = View Statistics  |  3 = Exit
+
+// Renders the main menu and returns the index of the chosen option:
+//   0 = Lessons | 1 = Take IT Test | 2 = View Statistics | 3 = Homework | 4 = Log out
 int showMainMenu()
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("MAIN MENU");
     cout << "\n";
-    
-    string options[4];
+
+    string options[5];
     options[0] = "Lessons";
     options[1] = "Take IT Test";
     options[2] = "View Statistics";
-    options[3] = "Exit";
-
-    int idx = arrowMenu(options, 4);
+    options[3] = "Homework";
+    options[4] = "Log out";
+    int idx = arrowMenu(options, 5);
     cout << "\n";
     return idx;
 }
 
-// Renders the lesson selection menu and returns the index of the chosen module
+// Renders the lesson selection menu and returns the index of the chosen module:
+//   0 = HTML | 1 = CSS | 2 = JavaScript | 3 = Back
 int showLessonsMenu()
 {
     clearScreen();
     printAsciiTitle();
     printCenteredTitle("LESSON MODULES");
     cout << "\n";
-    
+
     string options[4];
     options[0] = "HTML Basics";
     options[1] = "CSS Basics";
     options[2] = "JavaScript Basics";
     options[3] = "Back to Main Menu";
-
     int idx = arrowMenu(options, 4);
     cout << "\n";
     return idx;
 }
 
-// Pauses execution and waits for the user to press Enter before continuing.
-// Typically called at the end of a lesson or results screen so the user can
-// read the content at their own pace before being returned to the menu.
+// Blocks until the user presses Enter; used at the end of lessons and result screens
 void waitForEnter()
 {
     cout << "\n";
     printCenteredText("Press Enter to go back...");
     showCursor();
-    cin.ignore(1000, '\n');  // Flush any leftover newline from a previous cin >> read
-    cin.get();               // Block until the user actually presses
+    cin.ignore(1000, '\n');   // flush any leftover newline
+    cin.get();                // wait for Enter
 }

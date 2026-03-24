@@ -16,10 +16,6 @@ static void printItem(const string& tag, const string& desc)
     cout << string(14, ' ') << string(p, ' ') << line << "\n";
 }
 
-// ─── Lesson screens ───────────────────────────────────────────────────────────
-// Each function clears the screen, displays the lesson content, and blocks
-// until the user presses Enter to return to the lessons menu.
-
 void showHtmlLesson()
 {
     clearScreen();
@@ -89,13 +85,10 @@ void showJsLesson()
 }
 
 // Populates the question bank with 30 questions — 10 per topic (HTML, CSS, JS).
-// Questions are stored in order: indices 0-9 = HTML, 10-19 = CSS, 20-29 = JS.
-// The last field on each row is the topic index used by the test and statistics modules.
 void initializeQuestionBank(Question questionBank[], int size)
 {
-    if (size < 30) return;  // Guard against an undersized array being passed in
+    if (size < 30) return;
 
-    // HTML questions (topic 0)
     questionBank[0] = { "What does HTML stand for?",                    "HyperText Markup Language", "HighText Machine Language",   "Home Tool Markup Language",    'A', 0 };
     questionBank[1] = { "Which tag defines a paragraph?",               "<para>",                    "<p>",                         "<paragraph>",                  'B', 0 };
     questionBank[2] = { "Which tag creates a hyperlink?",               "<link>",                    "<a>",                         "<href>",                       'B', 0 };
@@ -107,7 +100,6 @@ void initializeQuestionBank(Question questionBank[], int size)
     questionBank[8] = { "Which element sets the browser-tab title?",    "<meta>",                    "<title>",                     "<h1>",                         'B', 0 };
     questionBank[9] = { "Which tag inserts a line break?",              "<lb>",                      "<br>",                        "<break>",                      'B', 0 };
 
-    // CSS questions (topic 1)
     questionBank[10] = { "What does CSS stand for?",                     "Cascading Style Sheets",    "Creative Style System",       "Computer Styled Sheets",       'A', 1 };
     questionBank[11] = { "Which property changes text color?",           "font-color",                "color",                       "text-color",                   'B', 1 };
     questionBank[12] = { "Which property changes the background color?", "background",                "bgcolor",                     "background-color",             'C', 1 };
@@ -119,7 +111,6 @@ void initializeQuestionBank(Question questionBank[], int size)
     questionBank[18] = { "Which property sets the font type?",           "font-family",               "font-type",                   "font-style",                   'A', 1 };
     questionBank[19] = { "How do you write a CSS comment?",              "// comment",                "<!-- comment -->",             "/* comment */",                'C', 1 };
 
-    // JavaScript questions (topic 2)
     questionBank[20] = { "Which HTML element holds JavaScript?",         "<js>",                      "<script>",                    "<javascript>",                 'B', 2 };
     questionBank[21] = { "How do you show an alert saying Hello?",       "alert('Hello');",           "msg('Hello');",               "alertBox('Hello');",           'A', 2 };
     questionBank[22] = { "Which keyword declares a block-scoped var?",   "var",                       "let",                         "constant",                     'B', 2 };

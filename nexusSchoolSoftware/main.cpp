@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include "colors.h"
 #include "gui.h"
@@ -7,73 +7,104 @@
 #include "statistics.h"
 #include "randomizer.h"
 #include "auth.h"
+#include "homework.h"
+
 using namespace std;
 
 int main()
 {
-    // Set up accounts and require login before anything else
+    // ── One-time setup ────────────────────────────────────────────────────────
     UserAccount accounts[maxAccounts];
-    initializeAccounts(accounts, maxAccounts);
-    string loggedInUser;
+    initializeAccounts(accounts, maxAccounts);   // blank all account slots
 
-    // If the user exits the auth screen without logging in, close the app cleanly
-    if (!handleAuthentication(accounts, maxAccounts, loggedInUser))
-    {
-		clearScreen(); // Clear the screen before showing the goodbye message
-		printAsciiTitle();  
-		printCenteredTitle("GOODBYE");  // Show a goodbye message if the user exits from the authentication screen
-        printCenteredText("Exiting Nexus School Software.  See you next time!");
-        cout << "\n";
-        return 0;
-    }
+    HomeworkAssignment homeworkAssignments[homeworkCount];
+    initializeHomeworkAssignments(homeworkAssignments);  // set up the 3 assignments
 
-    // Use the student ID as a seed so question order is consistent per student
-    clearScreen();
-    printAsciiTitle();
-	printCenteredTitle("STUDENT ID"); // Prompt the user for their student ID to use as a seed for randomization
-    string idStr = centeredInput("Enter your numeric student ID: ");
-    unsigned int studentId = 0;
-
-    // Parse the ID manually to strip any non-numeric characters
-    for (int i = 0; i < (int)idStr.length(); i++)
-    {
-        if (idStr[i] >= '0' && idStr[i] <= '9')
-            studentId = studentId * 10 + (unsigned int)(idStr[i] - '0');
-    }
-    if (studentId == 0) studentId = 1;  // Fallback in case input was entirely non-numeric
-    setSeed(studentId);
-
-    // Initialize the question bank and blank statistics for this session
     Question questionBank[questionBankSize];
     initializeQuestionBank(questionBank, questionBankSize);
-    StatisticsData statisticsData;
-    initializeStatistics(statisticsData);
 
-    // Main navigation loop � exits when the user selects "Exit" (index 3)
-    int mainChoice = -1;
-    while (mainChoice != 3)
+    // ── Outer loop: runs until the user chooses Exit from the login screen ────
+    bool appRunning = true;
+    while (appRunning)
     {
-        mainChoice = showMainMenu();
-        if (mainChoice == 0)
+        string loggedInUser = "";
+
+        // Show the login / sign-up screen.
+        // Returns false only when the user picks "Exit" from the auth menu.
+        if (!handleAuthentication(accounts, maxAccounts, loggedInUser))
         {
-            // Lesson sub-loop � stays inside the lessons menu until "Back" is chosen
-            int lessonChoice = -1;
-            while (lessonChoice != 3)
-			{   // Show the lessons menu and call the appropriate function based on the user's choice
-                lessonChoice = showLessonsMenu();
-                if (lessonChoice == 0)      showHtmlLesson();
-                else if (lessonChoice == 1) showCssLesson();
-                else if (lessonChoice == 2) showJsLesson();
-            }
+            clearScreen();
+            printAsciiTitle();
+            printCenteredTitle("GOODBYE");
+            printCenteredText("Exiting Nexus School Software.  See you next time!");
+            cout << "\n";
+            appRunning = false;
+            break;
         }
-        else if (mainChoice == 1) runItTest(questionBank, statisticsData);
-        else if (mainChoice == 2) showStatistics(statisticsData);
+
+        // Ask for a numeric student ID to seed the randomiser
+        clearScreen();
+        printAsciiTitle();
+        printCenteredTitle("STUDENT ID");
+        string idStr = centeredInput("Enter your numeric student ID: ");
+
+        unsigned int studentId = 0;
+        for (int i = 0; i < (int)idStr.length(); i++)
+            if (idStr[i] >= '0' && idStr[i] <= '9')
+                studentId = studentId * 10 + (unsigned int)(idStr[i] - '0');
+        if (studentId == 0) studentId = 1;  // guard against empty input
+        setSeed(studentId);
+
+        // ── Inner loop: main menu for the logged-in session ───────────────────
+        // Returns when the user selects "Log out" (index 4).
+        int mainChoice = -1;
+        while (mainChoice != 4)
+        {
+            mainChoice = showMainMenu();   // 0-Lessons 1-Test 2-Stats 3-HW 4-Logout
+
+            if (mainChoice == 0)
+            {
+                // Lesson sub-loop
+                int lessonChoice = -1;
+                while (lessonChoice != 3)
+                {
+                    lessonChoice = showLessonsMenu();
+                    if (lessonChoice == 0) showHtmlLesson();
+                    else if (lessonChoice == 1) showCssLesson();
+                    else if (lessonChoice == 2) showJsLesson();
+                }
+            }
+            else if (mainChoice == 1)
+            {
+                // Run the test using this user's personal statistics
+                int userIdx = findUserIndex(accounts, maxAccounts, loggedInUser);
+                if (userIdx != -1)
+                    runItTest(questionBank, accounts[userIdx].personalStats);
+            }
+            else if (mainChoice == 2)
+            {
+                // Show this user's stats plus the cross-user leaderboard
+                showStatistics(accounts, maxAccounts, loggedInUser);
+            }
+            else if (mainChoice == 3)
+            {
+                // Show the homework hub for this user
+                int userIdx = findUserIndex(accounts, maxAccounts, loggedInUser);
+                if (userIdx != -1)
+                    showHomeworkMenu(accounts[userIdx].homeworkRecords,
+                        homeworkAssignments,
+                        questionBank);
+            }
+            // mainChoice == 4: Log out — loop condition ends the inner while
+        }
+
+        // Brief logout confirmation before returning to the auth screen
+        clearScreen();
+        printAsciiTitle();
+        printCenteredTitle("LOGGED OUT");
+        printCenteredText("Goodbye, " + loggedInUser + "!  See you next time.");
+        cout << "\n";
     }
 
-    clearScreen();
-    printAsciiTitle();
-    printCenteredTitle("SESSION CLOSED");
-    printCenteredText("Thanks for using Nexus School Software,  " + loggedInUser + "!");
-    cout << "\n";
     return 0;
 }

@@ -66,3 +66,7 @@ _ReSharper*/
 # OS files
 Thumbs.db
 Desktop.ini
+
+!raylib/lib/x64/
+!*raylib.lib
+!*raylib.dll

@@ -1,33 +1,26 @@
-#ifndef HOMEWORK_H
-#define HOMEWORK_H
+#pragma once
 #include <string>
 #include "question.h"
 using namespace std;
 
-const int homeworkCount = 3;   // number of homework assignments
-const int hwQuestionCount = 10;  // questions per homework
+const int homeworkCount = 3;
+const int hwQuestionCount = 10;
 
-// Three possible states a homework can be in for a given user
 enum HomeworkStatus { UNDONE, VIEWED, DONE };
 
-// Stores the result for one homework assignment for one user
-struct HomeworkRecord
-{
-    HomeworkStatus status;
-    int score;          // number correct; 0 if not done yet
+struct HomeworkRecord {
+    HomeworkStatus status = UNDONE;
+    int score = 0;
 };
 
-// Describes a single homework assignment (title + which question-bank indexes to use)
-struct HomeworkAssignment
-{
-    string title;
-    string description;
-    int questionIndexes[hwQuestionCount];
+struct HomeworkAssignment {
+    string title, description;
+    int questionIndexes[hwQuestionCount] = {};
 };
 
-void initializeHomeworkAssignments(HomeworkAssignment assignments[]);
-void showHomeworkMenu(HomeworkRecord userRecords[],
-    HomeworkAssignment assignments[],
-    Question questionBank[]);
+void initializeHomeworkAssignments(HomeworkAssignment a[]);
 
-#endif
+struct App;
+void DrawHomework(App& a);
+void DrawHWDetail(App& a);
+void DrawHWTest(App& a);

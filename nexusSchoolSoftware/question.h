@@ -1,23 +1,18 @@
-#ifndef QUESTION_H
-#define QUESTION_H
+#pragma once
 #include <string>
+#include <vector>
 using namespace std;
 
-struct Question
-{
-    string text;
-    string optionA;
-    string optionB;
-    string optionC;
+struct Question {
+    string text, optionA, optionB, optionC;
     char correctAnswer;
-    int category;
+    int  category; // 0=HTML 1=CSS 2=JS
 };
-
 const int questionBankSize = 30;
 
-void initializeQuestionBank(Question questionBank[], int size);
-void showHtmlLesson();
-void showCssLesson();
-void showJsLesson();
+struct LessonItem { string tag, desc; };
 
-#endif
+void initializeQuestionBank(Question qb[], int sz);
+vector<LessonItem> getHtmlItems();
+vector<LessonItem> getCssItems();
+vector<LessonItem> getJsItems();

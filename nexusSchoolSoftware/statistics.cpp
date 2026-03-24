@@ -1,111 +1,81 @@
-﻿#include <iostream>
-#include <iomanip>
-#include <string>
-#include "auth.h"       // full UserAccount definition needed here
 #include "statistics.h"
-#include "colors.h"
 #include "gui.h"
+#include "colors.h"
+#include "auth.h"
+#include <algorithm>
+#include <string>
 
-using namespace std;
-
-// Sets all counters and grades to their neutral starting values
-void initializeStatistics(StatisticsData& stats)
-{
-    stats.totalTests = 0;
-    stats.highestGrade = 2.0;
-    stats.lowestGrade = 6.0;
-    stats.sumOfGrades = 0.0;
-    stats.htmlCorrect = 0;
-    stats.htmlTotal = 0;
-    stats.cssCorrect = 0;
-    stats.cssTotal = 0;
-    stats.jsCorrect = 0;
-    stats.jsTotal = 0;
+void initializeStatistics(StatisticsData& s) {
+    s.totalTests = 0; s.highestGrade = 2.0; s.lowestGrade = 6.0; s.sumOfGrades = 0.0;
+    s.htmlCorrect = s.htmlTotal = s.cssCorrect = s.cssTotal = s.jsCorrect = s.jsTotal = 0;
 }
 
-// Called after every test to keep the running totals up-to-date
-void updateOverallStatistics(StatisticsData& stats, double grade)
-{
-    stats.totalTests++;
-    stats.sumOfGrades += grade;
-    if (grade > stats.highestGrade) stats.highestGrade = grade;
-    if (grade < stats.lowestGrade)  stats.lowestGrade = grade;
+void updateOverallStatistics(StatisticsData& s, double grade) {
+    s.totalTests++;
+    s.sumOfGrades += grade;
+    if (grade > s.highestGrade) s.highestGrade = grade;
+    if (grade < s.lowestGrade)  s.lowestGrade = grade;
 }
 
-// Helper: returns category success percentage, or -1 if no attempts yet
-static double categoryPct(int correct, int total)
-{
-    if (total == 0) return -1.0;
-    return (double)correct / total * 100.0;
-}
-
-// Displays the logged-in user's personal stats plus a leaderboard across all accounts
-void showStatistics(UserAccount accounts[], int accountCount, const string& currentUser)
-{
-    clearScreen();
-    printAsciiTitle();
-    printCenteredTitle("STATISTICS");
-
-    // Locate the current user's account
-    int userIdx = findUserIndex(accounts, accountCount, currentUser);
-
-    if (userIdx == -1 || accounts[userIdx].personalStats.totalTests == 0)
-    {
-        printCenteredText("You have not completed any tests yet.");
-        cout << "\n";
-        waitForEnter();
+void DrawStats(App& a) {
+    DrawNSSTitle(a.t); DrawHDivider(142);
+    DrawCentered("STATISTICS", 160, 30, C_GOLD);
+    if (a.userIdx < 0 || a.accounts[a.userIdx].personalStats.totalTests == 0) {
+        DrawCentered("No tests completed yet.", 300, 20, C_DIM);
+        if (UIButton("<- Back", (float)(SW / 2 - 80), 360, 160, 44, C_PANEL2, C_DIM, 17)) a.scr = SCR_MAIN;
         return;
     }
+    auto& st = a.accounts[a.userIdx].personalStats;
+    double avg = st.sumOfGrades / st.totalTests;
+    float hw2 = (SW - 240) / 2.f;
 
-    StatisticsData& s = accounts[userIdx].personalStats;
-    double avgGrade = s.sumOfGrades / s.totalTests;
-    double htmlPct = categoryPct(s.htmlCorrect, s.htmlTotal);
-    double cssPct = categoryPct(s.cssCorrect, s.cssTotal);
-    double jsPct = categoryPct(s.jsCorrect, s.jsTotal);
+    DrawCard(100, 202, hw2, 260, 0.08f);
+    DrawText(("  " + a.user).c_str(), (int)(114), (int)(218), 20, C_MINT);
+    DrawHDivider(244, 100);
+    float ry = 252; float rx = 114;
+    auto Row = [&](const char* lbl, const char* val, Color vc) {
+        DrawText(lbl, (int)rx, (int)ry, 16, C_DIM);
+        DrawText(val, (int)(rx + 220), (int)ry, 16, vc); ry += 32;
+        };
+    Row("Total Tests", to_string(st.totalTests).c_str(), C_TEXT);
+    Row("Highest", (to_string(st.highestGrade).substr(0, 4) + "/6").c_str(), C_GREEN);
+    Row("Lowest", (to_string(st.lowestGrade).substr(0, 4) + "/6").c_str(), C_RED);
+    Row("Average", (to_string(avg).substr(0, 4) + "/6").c_str(), C_GOLD);
 
-    // ── Personal stats ────────────────────────────────────────────────────────
-    printSectionTitle("Your Stats  [ " + currentUser + " ]");
-    printLabelValue("Total tests     ", to_string(s.totalTests));
-    printLabelValue("Highest grade   ", to_string(s.highestGrade).substr(0, 4));
-    printLabelValue("Lowest grade    ", to_string(s.lowestGrade).substr(0, 4));
-    printLabelValue("Average grade   ", to_string(avgGrade).substr(0, 4));
-
-    printSectionTitle("Category Performance");
-    printLabelValue("HTML      ", htmlPct >= 0 ? to_string((int)htmlPct) + "%" : "no attempts");
-    printLabelValue("CSS       ", cssPct >= 0 ? to_string((int)cssPct) + "%" : "no attempts");
-    printLabelValue("JavaScript", jsPct >= 0 ? to_string((int)jsPct) + "%" : "no attempts");
-
-    // ── Leaderboard (all active accounts that have taken at least one test) ───
-    string topScorer = "", bestHtmlUser = "", bestCssUser = "", bestJsUser = "";
-    double topAvg = -1.0, topHtml = -1.0, topCss = -1.0, topJs = -1.0;
-
-    for (int i = 0; i < accountCount; i++)
-    {
-        if (!accounts[i].used) continue;
-        StatisticsData& u = accounts[i].personalStats;
-        if (u.totalTests == 0) continue;
-
-        double avg = u.sumOfGrades / u.totalTests;
-        if (avg > topAvg) { topAvg = avg; topScorer = accounts[i].username; }
-
-        double hp = categoryPct(u.htmlCorrect, u.htmlTotal);
-        double cp = categoryPct(u.cssCorrect, u.cssTotal);
-        double jp = categoryPct(u.jsCorrect, u.jsTotal);
-
-        if (hp > topHtml) { topHtml = hp; bestHtmlUser = accounts[i].username; }
-        if (cp > topCss) { topCss = cp; bestCssUser = accounts[i].username; }
-        if (jp > topJs) { topJs = jp; bestJsUser = accounts[i].username; }
+    struct CB { const char* n; int c, tot; Color col; };
+    CB cats[] = { {"HTML",st.htmlCorrect,st.htmlTotal,C_ROSE},
+               {"CSS", st.cssCorrect, st.cssTotal, C_ACCENT},
+               {"JS",  st.jsCorrect,  st.jsTotal,  C_GOLD} };
+    ry += 4;
+    for (auto& cb : cats) {
+        DrawText(cb.n, (int)rx, (int)ry, 14, cb.col);
+        float pct = cb.tot > 0 ? (float)cb.c / cb.tot : 0;
+        DrawProgressBar(rx + 42, ry + 2, hw2 - 90, 12, pct, cb.col);
+        string ps = cb.tot > 0 ? to_string((int)(pct * 100)) + "%" : "N/A";
+        DrawText(ps.c_str(), (int)(rx + hw2 - 52), (int)ry, 13, C_DIM);
+        ry += 24;
     }
 
-    if (topScorer != "")
-    {
-        printSectionTitle("Leaderboard");
-        printLabelValue("Top scorer      ", topScorer + "  (avg " + to_string(topAvg).substr(0, 4) + ")");
-        if (bestHtmlUser != "") printLabelValue("Best HTML       ", bestHtmlUser + "  (" + to_string((int)topHtml) + "%)");
-        if (bestCssUser != "") printLabelValue("Best CSS        ", bestCssUser + "  (" + to_string((int)topCss) + "%)");
-        if (bestJsUser != "") printLabelValue("Best JavaScript ", bestJsUser + "  (" + to_string((int)topJs) + "%)");
+    float lx = 100 + hw2 + 40;
+    DrawCard(lx, 202, hw2, 260, 0.08f);
+    DrawText("  LEADERBOARD", (int)(lx + 16), (int)(218), 20, C_GOLD);
+    DrawHDivider(244, lx);
+    vector<pair<double, string>> board;
+    for (int i = 0; i < maxAccounts; i++)
+        if (a.accounts[i].used && a.accounts[i].personalStats.totalTests > 0)
+            board.push_back({ a.accounts[i].personalStats.sumOfGrades / a.accounts[i].personalStats.totalTests,a.accounts[i].username });
+    sort(board.rbegin(), board.rend());
+    float ly = 252;
+    Color mCols[] = { C_GOLD,{192,192,192,255},{180,110,0,255} };
+    for (int i = 0; i < (int)board.size() && i < 8; i++) {
+        bool me = board[i].second == a.user;
+        if (me) DrawRectangleRounded({ lx + 8,ly,(float)(hw2 - 16),28 }, 0.2f, 4, { 30,40,70,200 });
+        Color tc = i < 3 ? mCols[i] : (me ? C_MINT : C_DIM);
+        string rank = to_string(i + 1) + ".  " + board[i].second;
+        DrawText(rank.c_str(), (int)(lx + 18), (int)(ly + 6), 15, tc);
+        string av2 = to_string(board[i].first).substr(0, 4);
+        DrawText(av2.c_str(), (int)(lx + hw2 - 52), (int)(ly + 6), 15, tc);
+        ly += 32;
     }
-
-    cout << "\n";
-    waitForEnter();
+    if (UIButton("<- Main Menu", (float)(SW / 2 - 90), 480, 180, 44, C_PANEL2, C_DIM, 17)) a.scr = SCR_MAIN;
 }

@@ -1,10 +1,8 @@
-#ifndef TEST_H
-#define TEST_H
+#pragma once
 #include "question.h"
 #include "statistics.h"
 
 const int testQuestionCount = 20;
 
-void runItTest(Question questionBank[], StatisticsData& stats);
-
-#endif
+struct App;
+void DrawTest(App& a);

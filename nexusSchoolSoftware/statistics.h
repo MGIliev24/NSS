@@ -1,32 +1,21 @@
-#ifndef STATISTICS_H
-#define STATISTICS_H
+#pragma once
 #include <string>
 using namespace std;
 
-// Stores cumulative test results for a single user across all sessions
-struct StatisticsData
-{
-    int    totalTests;
-    double highestGrade;
-    double lowestGrade;
-    double sumOfGrades;
-    int    htmlCorrect;
-    int    htmlTotal;
-    int    cssCorrect;
-    int    cssTotal;
-    int    jsCorrect;
-    int    jsTotal;
+struct StatisticsData {
+    int    totalTests = 0;
+    double highestGrade = 2.0;
+    double lowestGrade = 6.0;
+    double sumOfGrades = 0.0;
+    int htmlCorrect = 0, htmlTotal = 0;
+    int cssCorrect = 0, cssTotal = 0;
+    int jsCorrect = 0, jsTotal = 0;
 };
 
-// Forward declaration — lets us use UserAccount* in the signature without
-// including auth.h here (which would create a circular dependency).
 struct UserAccount;
 
-void initializeStatistics(StatisticsData& stats);
-void updateOverallStatistics(StatisticsData& stats, double grade);
+void initializeStatistics(StatisticsData& s);
+void updateOverallStatistics(StatisticsData& s, double grade);
 
-// Shows the logged-in user's personal stats plus a cross-user leaderboard
-void showStatistics(UserAccount accounts[], int accountCount,
-    const string& currentUser);
-
-#endif
+struct App;
+void DrawStats(App& a);

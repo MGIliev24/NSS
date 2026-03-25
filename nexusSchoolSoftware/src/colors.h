@@ -1,4 +1,6 @@
 ﻿#pragma once
+//color definitions and UI drawing
+
 #include "raylib.h"
 #include <string>
 using namespace std;

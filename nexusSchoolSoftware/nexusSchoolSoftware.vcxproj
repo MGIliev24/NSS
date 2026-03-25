@@ -10,6 +10,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\auth.cpp" />
+    <ClCompile Include="src\gui.cpp" />
+    <ClCompile Include="src\homework.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\question.cpp" />
+    <ClCompile Include="src\statistics.cpp" />
+    <ClCompile Include="src\test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\auth.h" />
+    <ClInclude Include="src\colors.h" />
+    <ClInclude Include="src\gui.h" />
+    <ClInclude Include="src\homework.h" />
+    <ClInclude Include="src\question.h" />
+    <ClInclude Include="src\randomizer.h" />
+    <ClInclude Include="src\statistics.h" />
+    <ClInclude Include="src\test.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -55,10 +74,11 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(RaylibLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;opengl32.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -77,27 +97,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(RaylibLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;opengl32.lib;gdi32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="auth.cpp" />
-    <ClCompile Include="gui.cpp" />
-    <ClCompile Include="homework.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="question.cpp" />
-    <ClCompile Include="statistics.cpp" />
-    <ClCompile Include="test.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="auth.h" />
-    <ClInclude Include="colors.h" />
-    <ClInclude Include="gui.h" />
-    <ClInclude Include="homework.h" />
-    <ClInclude Include="question.h" />
-    <ClInclude Include="randomizer.h" />
-    <ClInclude Include="statistics.h" />
-    <ClInclude Include="test.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

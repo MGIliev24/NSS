@@ -5,6 +5,8 @@
 #include <cmath>
 #include <cstdlib>
 
+// //Initializes all account slots with default values
+
 void initializeAccounts(UserAccount accounts[], int size) {
     for (int i = 0; i < size; i++) {
         accounts[i].username = ""; accounts[i].password = ""; accounts[i].used = false;
@@ -16,14 +18,19 @@ void initializeAccounts(UserAccount accounts[], int size) {
     }
 }
 
+// Searches for an active user and returns its array index, or -1 if not found
+
 int findUserIndex(UserAccount accounts[], int size, const string& username) {
     for (int i = 0; i < size; i++)
         if (accounts[i].used && accounts[i].username == username) return i;
     return -1;
 }
+// Renders the authentication screen
 
 void DrawAuth(App& a) {
     srand(42);
+    // Draw animated background
+
     for (int i = 0; i < 80; i++) {
         float bri = 0.3f + 0.7f * sinf(a.t * 0.6f + i);
         DrawCircle(rand() % SW, rand() % SH, 1, { (unsigned char)(bri * 180),(unsigned char)(bri * 190),255,80 });
@@ -70,6 +77,7 @@ void DrawAuth(App& a) {
     if (UIButton("EXIT PROGRAM", cx + 30, cy + 286, 340, 40, C_PANEL2, C_DIM, 17)) {
         exit(0);
     }
+    // Handle login and account creation
 
     if (go) {
         string u = a.uBuf, p = a.pBuf;

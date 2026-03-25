@@ -3,6 +3,7 @@
 #include "colors.h"
 #include <string>
 
+// Renders the IT test interface
 void DrawTest(App& a) {
     if (a.tDone) {
         DrawNSSTitle(a.t); DrawHDivider(142);
@@ -46,6 +47,7 @@ void DrawTest(App& a) {
         DrawRectangleRounded({ ox + 12,oy + 13,28,26 }, 0.5f, 4, { 55,60,120,200 });
         DrawText(labs[i], (int)(ox + 20), (int)(oy + 17), 16, C_ACCENT);
         DrawText(opts[i], (int)(ox + 52), (int)(oy + 16), 17, C_TEXT);
+        // Handle answer selection
         if (!ans && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), { ox,oy,ow,52 })) {
             a.tAns = i;
             if ((char)('A' + i) == q.correctAnswer) { a.tOk++; Spark(a, ox + ow / 2, oy + 26, C_GREEN, 20); }

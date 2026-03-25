@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+// Creates particle burst effect
+
 
 void Spark(App& a, float x, float y, Color c, int n) {
     for (int i = 0; i < n; i++) {
@@ -18,6 +20,7 @@ void Spark(App& a, float x, float y, Color c, int n) {
         a.parts.push_back(p);
     }
 }
+// Displays a temporary flash message
 
 void Flash(App& a, const string& m, Color c) {
     a.flashMsg = m; a.flashT = 2.5f; a.flashCol = c;
@@ -27,6 +30,7 @@ static void TickParticles(App& a, float dt) {
     for (auto& p : a.parts) { p.x += p.vx; p.y += p.vy; p.vy += 0.06f; p.life -= dt; }
     a.parts.erase(remove_if(a.parts.begin(), a.parts.end(), [](const Particle& p) {return p.life <= 0; }), a.parts.end());
 }
+// Updates particle physics: movement, gravity, and lifespan decay
 
 static void DrawParticles(const App& a) {
     for (auto& p : a.parts) {
@@ -51,6 +55,7 @@ void TypeIn(char* buf, int bsz) {
     while (k > 0) { if (k >= 32 && k < 127 && len < bsz - 2) { buf[len++] = k; buf[len] = 0; }k = GetCharPressed(); }
     if (IsKeyPressed(KEY_BACKSPACE) && len > 0) buf[--len] = 0;
 }
+// Renders main menu with navigation to lessons, tests, statistics, homework, and logout
 
 void DrawMain(App& a) {
     DrawNSSTitle(a.t);
@@ -121,6 +126,7 @@ void DrawLessons(App& a) {
         cy += 84;
     }
 }
+// Displays lesson content
 
 void DrawLesson(App& a, const char* title, const char* sub, const vector<LessonItem>& items, Color ac) {
     DrawNSSTitle(a.t); DrawHDivider(142);
@@ -153,6 +159,7 @@ void DrawLesson(App& a, const char* title, const char* sub, const vector<LessonI
     }
     EndScissorMode();
 }
+// Main rendering loop
 
 void DrawAppScreen(App& a) {
     float dt = GetFrameTime();

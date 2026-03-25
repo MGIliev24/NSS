@@ -53,13 +53,12 @@ struct App {
     Color flashCol;
 };
 
-// Global UI Helpers
+// UI Helpers
 void Spark(App& a, float x, float y, Color c, int n = 14);
 void Flash(App& a, const string& m, Color c = { 80, 220, 140, 255 }); // Default Green
 void InputBox(const char* label, char* buf, int bsz, bool active, bool mask, float x, float y, float w, float h);
 void TypeIn(char* buf, int bsz);
 
-// Core Main Screens handled in gui.cpp
 void DrawMain(App& a);
 void DrawLessons(App& a);
 void DrawLesson(App& a, const char* title, const char* sub, const vector<LessonItem>& items, Color ac);

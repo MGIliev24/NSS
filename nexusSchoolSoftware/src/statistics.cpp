@@ -5,10 +5,12 @@
 #include <algorithm>
 #include <string>
 
+// Initializes statistics data
 void initializeStatistics(StatisticsData& s) {
     s.totalTests = 0; s.highestGrade = 2.0; s.lowestGrade = 6.0; s.sumOfGrades = 0.0;
     s.htmlCorrect = s.htmlTotal = s.cssCorrect = s.cssTotal = s.jsCorrect = s.jsTotal = 0;
 }
+//test statistics with a new grade
 
 void updateOverallStatistics(StatisticsData& s, double grade) {
     s.totalTests++;
@@ -16,6 +18,7 @@ void updateOverallStatistics(StatisticsData& s, double grade) {
     if (grade > s.highestGrade) s.highestGrade = grade;
     if (grade < s.lowestGrade)  s.lowestGrade = grade;
 }
+//dashboard with user performance
 
 void DrawStats(App& a) {
     DrawNSSTitle(a.t); DrawHDivider(142);

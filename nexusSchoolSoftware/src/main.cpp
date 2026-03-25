@@ -2,6 +2,8 @@
 #include "colors.h"
 #include "gui.h"
 
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
 int main() {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(SW, SH, "Nexus School Software");

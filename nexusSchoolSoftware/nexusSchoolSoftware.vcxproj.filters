@@ -7,61 +7,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\auth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="auth.cpp">
+    <ClCompile Include="src\gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="colors.cpp">
+    <ClCompile Include="src\homework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gui.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="question.cpp">
+    <ClCompile Include="src\question.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="randomizer.cpp">
+    <ClCompile Include="src\statistics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="statistics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="homework.cpp">
+    <ClCompile Include="src\test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auth.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="colors.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="question.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="randomizer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="statistics.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="test.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="homework.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignore" />
+    <ClInclude Include="src\auth.h" />
+    <ClInclude Include="src\colors.h" />
+    <ClInclude Include="src\gui.h" />
+    <ClInclude Include="src\homework.h" />
+    <ClInclude Include="src\question.h" />
+    <ClInclude Include="src\randomizer.h" />
+    <ClInclude Include="src\statistics.h" />
+    <ClInclude Include="src\test.h" />
   </ItemGroup>
 </Project>

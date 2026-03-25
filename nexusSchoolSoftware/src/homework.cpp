@@ -4,6 +4,7 @@
 #include "auth.h"
 #include <string>
 
+// Initializes homework assignments 
 void initializeHomeworkAssignments(HomeworkAssignment a[]) {
     a[0].title = "HTML Fundamentals"; a[0].description = "Practice HTML tags and page structure.";
     a[1].title = "CSS Styling";        a[1].description = "Practice CSS properties and selectors.";
@@ -14,6 +15,7 @@ void initializeHomeworkAssignments(HomeworkAssignment a[]) {
         a[2].questionIndexes[i] = i + 20;
     }
 }
+// Displays homework list with status
 
 void DrawHomework(App& a) {
     DrawNSSTitle(a.t); DrawHDivider(142);
@@ -48,6 +50,7 @@ void DrawHomework(App& a) {
     }
     if (UIButton("<- Main Menu", (float)(SW / 2 - 90), cy + 10, 180, 44, C_PANEL2, C_DIM, 17)) a.scr = SCR_MAIN;
 }
+// Renders homework test questions
 
 void DrawHWDetail(App& a) {
     int i = a.hwSel;
